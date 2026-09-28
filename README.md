@@ -2,11 +2,7 @@
 
 My personal site: React + TypeScript + Vite, no UI framework.
 
-Interactive pieces:
-
-- **Project demos**: a byte-level encoder for the `dist-kv-store` wire protocol, and an x86_64 page-walk visualizer for the microkernel.
-- **Filters**: click a tech tag on a project to filter by it; click a skill to see where it's been used.
-- **Terminal**: a small shell in the contact section (`help`, `ls`, `cat kv`, ...).
+It's laid out like a USGS topo sheet. The terrain at the top is generated in the browser: hover for elevation, click to drop a benchmark. The two big projects have inline demos (a byte-level encoder for the `dist-kv-store` protocol, and an x86_64 page-table walker). The Outside section maps national parks and draws peaks as a skyline by elevation.
 
 ## Develop
 
@@ -17,7 +13,7 @@ npm run dev
 
 ## Editing content
 
-Everything lives in [`src/data.ts`](src/data.ts). To add a headshot, drop it at `public/headshot.jpg` and set `profile.headshot = '/headshot.jpg'`.
+Everything lives in [`src/data.ts`](src/data.ts). Mark parks in `visitedParks` (names must match the `parks` list) and add mountains to `peaks`. To add a headshot, drop it at `public/headshot.jpg` and set `profile.headshot = '/headshot.jpg'`.
 
 ## Deploy
 

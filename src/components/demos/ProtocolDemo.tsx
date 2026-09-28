@@ -77,8 +77,8 @@ export default function ProtocolDemo() {
   return (
     <div className="demo">
       <p className="demo__intro">
-        Build a request and watch it get encoded byte-for-byte in the same wire format the server
-        uses. Hit <strong>send</strong> to run it against a tiny in-browser store.
+        These are the actual bytes the server reads. Change the key or value and the frame
+        updates. Send runs it against a tiny store in your browser.
       </p>
       <div className="demo__controls">
         <div className="seg-toggle">
@@ -99,7 +99,7 @@ export default function ProtocolDemo() {
           </label>
         )}
         <button className="btn btn--primary btn--sm" onClick={send}>
-          send ⏎
+          send
         </button>
       </div>
 

@@ -1,119 +1,77 @@
-// All site content lives here so it can be edited without touching components.
+// Everything on the site lives in this file.
 
 export const profile = {
   name: 'Aarav Daga',
-  location: 'State College, PA',
   email: 'aaravdaga@gmail.com',
   github: 'https://github.com/ADaga460',
   linkedin: 'https://linkedin.com/in/aarav-daga-4325b5237',
-  // Drop a photo at public/headshot.jpg and set this to '/headshot.jpg'.
+  // Put a photo at public/headshot.jpg and set this to '/headshot.jpg'.
   headshot: null as string | null,
   intro:
-    'CS student at Penn State. I write systems and computer vision software, and I want to point it at ocean and space science.',
-  bio: [
-    "I'm studying computer science at Penn State with a minor in Computer Engineering, graduating in December 2027. Most of my work is in C, C++, Go, and CUDA: a hobby kernel, a key-value store, GPU training pipelines, and ESP32 firmware.",
-    "I like systems and computer vision because that's where software has to meet the hardware. Sensors, memory, bandwidth, and timing each add constraints, and working inside those limits is more interesting to me than stacking another abstraction layer between my code and the physical world.",
-    "I also care a lot about the environment. I've spent time in most of North America's major biomes, especially across California, and that's why I want my work to end up in marine and space science, on the kind of instruments, vehicles, and imaging pipelines built at places like MBARI and NASA.",
-  ],
-  plans:
-    "I'm planning to go to grad school as a way into that research. I'm also open to full-time engineering roles in the same space, either with part-time grad study or on their own.",
-};
-
-export const interests = {
-  building: [
-    {
-      title: 'Systems programming',
-      text: 'Kernels, storage engines, networking, and concurrency. Code where memory layout, latency, and failure modes matter.',
-    },
-    {
-      title: 'Computer vision',
-      text: 'Reconstruction and imaging on GPUs, especially from unusual sensors like sonar, and making those pipelines fast enough to be useful.',
-    },
-  ],
-  applying: [
-    {
-      title: 'Ocean science',
-      text: 'Underwater perception, autonomous vehicles, and the software researchers use to observe environments that are hard to reach.',
-    },
-    {
-      title: 'Space & Earth observation',
-      text: 'Flight and instrument software, onboard data processing, and imaging pipelines for planetary and Earth science.',
-    },
+    "I'm Aarav. I study CS at Penn State and mostly write low-level code: kernels, storage engines, CUDA, firmware. Eventually I want to be writing it for ocean and space science.",
+  status: 'Looking for summer 2027 internships and research.',
+  about: [
+    "I like systems and computer vision because that's where software has to deal with real hardware. Sensors are noisy and memory runs out, and I'd rather work on those problems than wire together a billion APIs that keep me away from the physical world.",
+    "I'm also an environmentalist. I've been to most of the major biomes in North America, a lot of them in California, and that's where the ocean and space interest comes from. MBARI and NASA build the instruments and robots people use to study places that are hard to get to, and that's the software I want to be writing.",
+    "Grad school is the plan, since it's the most direct way into that kind of research. I'd also take a full-time job in the same area and do a master's online, or skip it.",
   ],
 };
 
-export type Experience = {
+export type Job = {
   org: string;
   via?: string;
   role: string;
   dates: string;
-  location: string;
-  stack: string[];
-  stats: { value: string; label: string }[];
+  place: string;
   summary: string;
-  bullets: string[];
+  details: string[];
+  stack: string;
 };
 
-export const experience: Experience[] = [
+export const work: Job[] = [
   {
     org: 'Lockheed Martin',
-    role: 'Platform Engineering Intern',
-    dates: 'May 2026 – Aug 2026',
-    location: 'Remote',
-    stack: ['Go', 'React', 'Kubernetes', 'Jest'],
-    stats: [
-      { value: '9', label: 'merged MRs' },
-      { value: '60%', label: 'API latency cut' },
-      { value: '7,500', label: 'enterprise users' },
+    role: 'Platform engineering intern',
+    dates: 'May–Aug 2026',
+    place: 'Remote',
+    summary:
+      'Worked on Panel, a Go/React MLOps platform with 7,500 enterprise users. Nine merged MRs, mostly performance: API latency across four pipelines dropped about 60%.',
+    details: [
+      'Built job rerun end to end. A new Go endpoint turns an old job into a create-ready template, which meant normalizing GPU types, deduplicating command wrappers, and restoring ConfigMap files. Tested with Go tests and Jest.',
+      'Pages with a lot of pods were spiking latency because every pod made its own GPU request. I batched them behind a cap of 5 concurrent requests.',
+      'Split the utilization page into a cold-start load and a background refresh, with caching per group.',
+      'Fixed a fail-open regression in job-log handling without changing the response shape callers depended on.',
     ],
-    summary: 'Backend and frontend performance work on Panel, a full-stack Go/React MLOps platform.',
-    bullets: [
-      'Shipped 9 merged MRs to Panel, a full-stack Go/React MLOps platform serving 7,500 enterprise users.',
-      'Cut API latency 60% across 4 pipelines spanning backend API services and frontend workflows.',
-      'Built a full-stack job-rerun feature on a new Go endpoint that generates create-ready job templates, handling GPU type normalization, command-wrapper deduplication, and ConfigMap file restoration. Tested with Go and Jest.',
-      'Eliminated latency spikes under high pod counts by batching per-pod GPU requests behind a 5-concurrent cap.',
-      'Reworked utilization-page loading to separate cold start from background refresh, with per-group caching.',
-      'Fixed a fail-open regression in Go job-log handling while preserving response-shape contracts on provider errors.',
-    ],
+    stack: 'Go, React, Kubernetes, Jest',
   },
   {
     org: 'Lockheed Martin',
     via: 'Nittany AI Alliance',
-    role: 'Software Engineering Intern',
-    dates: 'Jan 2026 – Apr 2026',
-    location: 'State College, PA',
-    stack: ['CUDA', 'PyTorch', 'NCCL', 'HPC'],
-    stats: [
-      { value: '35.7 dB', label: 'PSNR' },
-      { value: '0.98', label: 'SSIM' },
-      { value: '11', label: 'distributed bugs fixed' },
-    ],
+    role: 'Software engineering intern',
+    dates: 'Jan–Apr 2026',
+    place: 'State College, PA',
     summary:
-      'Multi-GPU training for a new sonar Gaussian-splatting framework that generates synthetic underwater imagery from multi-view video.',
-    bullets: [
-      'Debugged tensor shape errors in custom CUDA rasterization kernels for a novel sonar Gaussian-splatting framework, reaching 35.7 dB PSNR and 0.98 SSIM.',
-      'Enabled multi-GPU distributed training on 2 NVIDIA GPUs by resolving 11 bugs across parameter sharding, missing all_reduce gradient sync, NCCL process-group deadlocks, and cross-rank densification.',
-      'Eliminated cross-rank parameter divergence with rank-0 stochastic sampling via dist.broadcast.',
-      'Configured the HPC training pipeline with PyTorch 2.6, CUDA 12.4, and custom-built CUDA extensions.',
-      'Identified per-pixel rasterization as the compute bottleneck by benchmarking single- vs. multi-GPU training.',
+      'Got a sonar Gaussian-splatting framework, which makes synthetic underwater imagery from multi-view video, training across two GPUs. It reached 35.7 dB PSNR and 0.98 SSIM.',
+    details: [
+      'Fixed 11 bugs to get distributed training working: parameter sharding, a missing all_reduce on gradients, NCCL process groups deadlocking, and densification going wrong across ranks.',
+      'Ranks were drifting apart, so rank 0 now does the stochastic sampling and broadcasts it with dist.broadcast.',
+      'Debugged tensor shape errors in the custom CUDA rasterization kernels.',
+      'Set up the HPC pipeline (PyTorch 2.6, CUDA 12.4, custom-built CUDA extensions) and benchmarked one GPU against two. Per-pixel rasterization turned out to be the bottleneck.',
     ],
+    stack: 'CUDA, PyTorch, NCCL',
   },
   {
-    org: 'ASME: Assistive Tech',
-    role: 'Lead Software Developer',
-    dates: 'Sep 2025 – Mar 2026',
-    location: 'State College, PA',
-    stack: ['C++', 'Python', 'ESP32', 'Bluetooth'],
-    stats: [
-      { value: '<200 ms', label: 'audio latency' },
-      { value: '5', label: 'person team' },
+    org: 'ASME Assistive Tech',
+    role: 'Lead software developer',
+    dates: 'Sep 2025–Mar 2026',
+    place: 'State College, PA',
+    summary:
+      'Led a team of five building glasses that show translated speech in real time, on an ESP32, with under 200 ms of audio latency.',
+    details: [
+      'Wrote the audio ingestion and processing path and the Bluetooth link to the display, in C++ and Python.',
+      'Wrote drivers for the microphone, OLED, and Bluetooth modules, with debounced I/O.',
     ],
-    summary: 'Real-time speech-translation glasses built on an ESP32.',
-    bullets: [
-      'Led a 5-person team building real-time speech-translation glasses on ESP32, achieving <200 ms audio latency.',
-      'Built the low-latency audio ingestion, processing, and Bluetooth display path in custom C++/Python firmware.',
-      'Integrated microphone, OLED, and Bluetooth modules with custom drivers and debounced I/O.',
-    ],
+    stack: 'C++, Python, ESP32, Bluetooth',
   },
 ];
 
@@ -123,149 +81,171 @@ export type Project = {
   id: string;
   name: string;
   dates: string;
-  stack: string[];
-  short: string;
-  bullets: string[];
+  stack: string;
+  text: string;
   repo?: string;
   demo?: DemoId;
-  featured?: boolean;
+  demoLabel?: string;
 };
 
 export const projects: Project[] = [
   {
     id: 'kv',
-    name: 'Distributed Key-Value Store',
-    dates: 'Jan & Sep 2026',
-    stack: ['C++20', 'ASIO', 'GTest', 'TCP'],
-    short:
-      'A key-value store in C++20 with an async ASIO server, a custom binary wire protocol, and a transactional layer for account transfers.',
-    bullets: [
-      'Async ASIO server driven by a thread pool, so no thread is pinned to a connection.',
-      'Custom length-prefixed binary protocol. The decoder rejects malformed frames instead of misreading them.',
-      'Storage-engine interface (ordered map with prefix scans) built so persistence and Raft replication can be added later.',
-      'Concurrency-safe transaction layer with deadlock-free money transfers, covered by 46 tests.',
-    ],
+    name: 'Distributed key-value store',
+    dates: '2026',
+    stack: 'C++20, ASIO, GTest',
+    text: "A key-value store I'm building from scratch. It has an async ASIO server, my own length-prefixed binary protocol, and a transaction layer for bank-style transfers that can't deadlock, with 46 tests so far. The storage engine sits behind an interface so persistence and Raft replication can go in later.",
     repo: 'https://github.com/ADaga460/dist-kv-store',
     demo: 'protocol',
-    featured: true,
+    demoLabel: 'Encode a request',
   },
   {
     id: 'kernel',
-    name: 'x86_64 Microkernel',
-    dates: 'Dec – Jan 2025',
-    stack: ['C', 'x86 Assembly', 'NASM', 'QEMU'],
-    short:
-      'A 1,200-line microkernel that boots on real hardware into long mode with 4-level paging, a full IDT, and ring-3 syscall gates.',
-    bullets: [
-      'Boots on real hardware into long mode with 4-level identity-mapped paging.',
-      'IDT with 32 exception handlers, including error-code handling and stack-frame management.',
-      'Syscall infrastructure with dedicated ring-3 gates for kernel/userspace communication.',
-    ],
+    name: 'x86_64 microkernel',
+    dates: '2025',
+    stack: 'C, x86 assembly, NASM, QEMU',
+    text: 'About 1,200 lines of C and assembly that boot on real hardware. It gets into long mode, identity-maps memory with 4-level paging, has handlers for all 32 CPU exceptions, and has syscall gates into ring 3.',
     repo: 'https://github.com/ADaga460/microkernel',
     demo: 'paging',
-    featured: true,
+    demoLabel: 'Walk the page tables',
   },
   {
     id: 'gitcontext',
     name: 'GitContext',
-    dates: 'Nov – Dec 2025',
-    stack: ['C', 'SQLite', 'JSONL', 'GitHub Actions'],
-    short:
-      'A Unix CLI in C that attaches notes and TODOs to Git commits by reading and writing directly inside .git/.',
-    bullets: [
-      'Custom file I/O inside the .git/ directory to attach metadata to commits.',
-      'JSONL note storage, a SQLite TODO manager, and post-commit/merge/pull hook automation.',
-      'Diff-safe merge-driver behavior, repository-scoped daemon mode, and CI/CD with GitHub Actions.',
-    ],
-    repo: 'https://github.com/ADaga460/gitnotes',
-    featured: true,
-  },
-  {
-    id: 'sonar-splat',
-    name: 'Sonar Gaussian Splatting (multi-GPU)',
-    dates: 'Jan – Apr 2026',
-    stack: ['CUDA', 'PyTorch', 'NCCL'],
-    short:
-      'Took a CUDA Gaussian-splatting framework for synthetic sonar imagery from single-GPU to distributed training, with Lockheed Martin.',
-    bullets: [
-      'Fixed 11 distributed-training bugs: sharding, gradient all_reduce, NCCL deadlocks, cross-rank densification.',
-      'Reached 35.7 dB PSNR / 0.98 SSIM on synthetic underwater imagery.',
-      'Benchmarked and profiled to identify per-pixel rasterization as the bottleneck.',
-    ],
-  },
-  {
-    id: 'glasses',
-    name: 'Speech-Translation Glasses',
-    dates: 'Sep 2025 – Mar 2026',
-    stack: ['C++', 'ESP32', 'Bluetooth', 'OLED'],
-    short: 'ESP32 glasses that caption translated speech in real time, with under 200 ms of audio latency.',
-    bullets: [
-      'Custom firmware for audio ingestion, processing, and a Bluetooth display path.',
-      'Drivers for the microphone, OLED, and Bluetooth modules, with debounced I/O.',
-    ],
-  },
-  {
-    id: 'emulator',
-    name: 'CPU Emulator',
     dates: '2025',
-    stack: ['C'],
-    short: 'An instruction-level CPU emulator in C.',
-    bullets: [],
-    repo: 'https://github.com/ADaga460/emulator',
+    stack: 'C, SQLite, JSONL',
+    text: "A CLI for attaching notes and TODOs to Git commits. It writes straight into .git/, keeps notes in JSONL and TODOs in SQLite, and runs on commit, merge, and pull hooks. There's also a merge driver so notes don't conflict, and a daemon mode.",
+    repo: 'https://github.com/ADaga460/gitnotes',
   },
   {
     id: 'blackhole',
-    name: 'Black Hole Simulator',
+    name: 'Black hole sim',
     dates: '2025',
-    stack: ['C++', 'OpenGL'],
-    short: 'A black-hole physics and rendering simulation in C++ and OpenGL, written to learn modern C++.',
-    bullets: [],
+    stack: 'C++, OpenGL',
+    text: 'A black hole simulator. I wrote it to learn C++ properly.',
     repo: 'https://github.com/ADaga460/blackhole-sim',
+  },
+  {
+    id: 'emulator',
+    name: 'CPU emulator',
+    dates: '2025',
+    stack: 'C',
+    text: 'An instruction-level CPU emulator.',
+    repo: 'https://github.com/ADaga460/emulator',
   },
   {
     id: 'newstexter',
     name: 'NewsTexter',
     dates: '2026',
-    stack: ['Python', 'FastAPI', 'Docker', 'LLMs'],
-    short:
-      'Collects under-covered international news, uses an LLM to rank and summarize it, and sends the results by text. It also answers questions sent back by SMS.',
-    bullets: [],
+    stack: 'Python, FastAPI, Docker',
+    text: "Texts a few people international news that doesn't get much coverage. An LLM picks and summarizes the stories, and you can text back to ask about them.",
     repo: 'https://github.com/ADaga460/newstexter',
   },
 ];
 
-export const skills: Record<string, string[]> = {
-  Languages: ['C', 'C++', 'Go', 'Python', 'Java', 'TypeScript', 'JavaScript', 'Bash', 'x86 Assembly'],
-  Systems: ['Linux', 'Kubernetes', 'Docker', 'TCP/IP', 'Multithreading', 'Concurrency', 'Memory Management'],
-  'GPU & ML': ['CUDA', 'NCCL', 'PyTorch', 'Distributed Training', 'Profiling'],
-  Embedded: ['ESP32', 'Raspberry Pi', 'Firmware', 'Device Drivers', 'SPI/I2C', 'Bluetooth/BLE'],
-  Tools: ['Git', 'gdb', 'QEMU', 'NASM', 'GTest', 'Jest', 'SQLite'],
+export const school = {
+  name: 'Penn State',
+  degree: 'B.S. Computer Science, minor in Computer Engineering',
+  dates: 'Graduating December 2027',
+  honors: "Dean's List, spring and fall 2025",
+  courses: [
+    'Systems Programming',
+    'Computer Organization & Design',
+    'Communication Networks',
+    'Digital Design',
+    'Data Structures & Algorithms',
+    'Theory of Computation',
+    'Programming Language Concepts',
+    'Probability',
+    'Mathematical Statistics',
+    'Linear Algebra',
+  ],
+  tools:
+    'C, C++, Go, Python, CUDA, x86 assembly, TypeScript. Linux, Kubernetes, Docker, gdb, QEMU, PyTorch, NCCL, ESP32.',
 };
 
-export const education = {
-  school: 'The Pennsylvania State University',
-  degree: 'B.S. Computer Science · Minor in Computer Engineering',
-  dates: 'Expected December 2027',
-  location: 'University Park, PA',
-  honors: ["Dean's List: Spring 2025", "Dean's List: Fall 2025"],
-  coursework: {
-    'Systems & Hardware': [
-      { code: 'CMPSC 311', name: 'Systems Programming' },
-      { code: 'CMPEN 331', name: 'Computer Organization & Design' },
-      { code: 'CMPEN 362', name: 'Communication Networks' },
-      { code: 'CMPEN 270', name: 'Digital Design' },
-    ],
-    'CS Theory': [
-      { code: 'CMPSC 465', name: 'Data Structures & Algorithms' },
-      { code: 'CMPSC 464', name: 'Theory of Computation' },
-      { code: 'CMPSC 461', name: 'Programming Language Concepts' },
-      { code: 'CMPSC 360', name: 'Discrete Math for CS' },
-    ],
-    'Math & Stats': [
-      { code: 'MATH 220', name: 'Matrices / Linear Algebra' },
-      { code: 'MATH 231', name: 'Multivariable Calculus' },
-      { code: 'STAT 318', name: 'Probability' },
-      { code: 'STAT 319', name: 'Mathematical Statistics' },
-    ],
-  } as Record<string, { code: string; name: string }[]>,
+// ---- Outside ---------------------------------------------------------------
+
+export type Park = { name: string; state: string; lat: number; lon: number };
+
+// All 63 US national parks. Mark the ones you've been to in `visitedParks` below.
+export const parks: Park[] = [
+  { name: 'Acadia', state: 'ME', lat: 44.35, lon: -68.21 },
+  { name: 'American Samoa', state: 'AS', lat: -14.25, lon: -170.68 },
+  { name: 'Arches', state: 'UT', lat: 38.68, lon: -109.57 },
+  { name: 'Badlands', state: 'SD', lat: 43.75, lon: -102.5 },
+  { name: 'Big Bend', state: 'TX', lat: 29.25, lon: -103.25 },
+  { name: 'Biscayne', state: 'FL', lat: 25.65, lon: -80.08 },
+  { name: 'Black Canyon of the Gunnison', state: 'CO', lat: 38.57, lon: -107.72 },
+  { name: 'Bryce Canyon', state: 'UT', lat: 37.57, lon: -112.18 },
+  { name: 'Canyonlands', state: 'UT', lat: 38.2, lon: -109.93 },
+  { name: 'Capitol Reef', state: 'UT', lat: 38.2, lon: -111.17 },
+  { name: 'Carlsbad Caverns', state: 'NM', lat: 32.17, lon: -104.44 },
+  { name: 'Channel Islands', state: 'CA', lat: 34.01, lon: -119.42 },
+  { name: 'Congaree', state: 'SC', lat: 33.78, lon: -80.78 },
+  { name: 'Crater Lake', state: 'OR', lat: 42.94, lon: -122.1 },
+  { name: 'Cuyahoga Valley', state: 'OH', lat: 41.24, lon: -81.55 },
+  { name: 'Death Valley', state: 'CA', lat: 36.24, lon: -116.82 },
+  { name: 'Denali', state: 'AK', lat: 63.33, lon: -150.5 },
+  { name: 'Dry Tortugas', state: 'FL', lat: 24.63, lon: -82.87 },
+  { name: 'Everglades', state: 'FL', lat: 25.32, lon: -80.93 },
+  { name: 'Gates of the Arctic', state: 'AK', lat: 67.78, lon: -153.3 },
+  { name: 'Gateway Arch', state: 'MO', lat: 38.63, lon: -90.19 },
+  { name: 'Glacier', state: 'MT', lat: 48.8, lon: -114.0 },
+  { name: 'Glacier Bay', state: 'AK', lat: 58.5, lon: -137.0 },
+  { name: 'Grand Canyon', state: 'AZ', lat: 36.06, lon: -112.14 },
+  { name: 'Grand Teton', state: 'WY', lat: 43.73, lon: -110.8 },
+  { name: 'Great Basin', state: 'NV', lat: 38.98, lon: -114.3 },
+  { name: 'Great Sand Dunes', state: 'CO', lat: 37.73, lon: -105.51 },
+  { name: 'Great Smoky Mountains', state: 'TN', lat: 35.68, lon: -83.53 },
+  { name: 'Guadalupe Mountains', state: 'TX', lat: 31.92, lon: -104.87 },
+  { name: 'Haleakalā', state: 'HI', lat: 20.72, lon: -156.17 },
+  { name: 'Hawaiʻi Volcanoes', state: 'HI', lat: 19.38, lon: -155.2 },
+  { name: 'Hot Springs', state: 'AR', lat: 34.51, lon: -93.05 },
+  { name: 'Indiana Dunes', state: 'IN', lat: 41.65, lon: -87.05 },
+  { name: 'Isle Royale', state: 'MI', lat: 48.1, lon: -88.55 },
+  { name: 'Joshua Tree', state: 'CA', lat: 33.79, lon: -115.9 },
+  { name: 'Katmai', state: 'AK', lat: 58.5, lon: -155.0 },
+  { name: 'Kenai Fjords', state: 'AK', lat: 59.92, lon: -149.65 },
+  { name: 'Kings Canyon', state: 'CA', lat: 36.8, lon: -118.55 },
+  { name: 'Kobuk Valley', state: 'AK', lat: 67.55, lon: -159.28 },
+  { name: 'Lake Clark', state: 'AK', lat: 60.97, lon: -153.42 },
+  { name: 'Lassen Volcanic', state: 'CA', lat: 40.49, lon: -121.51 },
+  { name: 'Mammoth Cave', state: 'KY', lat: 37.18, lon: -86.1 },
+  { name: 'Mesa Verde', state: 'CO', lat: 37.18, lon: -108.49 },
+  { name: 'Mount Rainier', state: 'WA', lat: 46.85, lon: -121.75 },
+  { name: 'New River Gorge', state: 'WV', lat: 38.07, lon: -81.08 },
+  { name: 'North Cascades', state: 'WA', lat: 48.7, lon: -121.2 },
+  { name: 'Olympic', state: 'WA', lat: 47.97, lon: -123.5 },
+  { name: 'Petrified Forest', state: 'AZ', lat: 35.07, lon: -109.78 },
+  { name: 'Pinnacles', state: 'CA', lat: 36.48, lon: -121.16 },
+  { name: 'Redwood', state: 'CA', lat: 41.3, lon: -124.0 },
+  { name: 'Rocky Mountain', state: 'CO', lat: 40.4, lon: -105.58 },
+  { name: 'Saguaro', state: 'AZ', lat: 32.25, lon: -110.5 },
+  { name: 'Sequoia', state: 'CA', lat: 36.43, lon: -118.68 },
+  { name: 'Shenandoah', state: 'VA', lat: 38.53, lon: -78.35 },
+  { name: 'Theodore Roosevelt', state: 'ND', lat: 46.97, lon: -103.45 },
+  { name: 'Virgin Islands', state: 'VI', lat: 18.33, lon: -64.73 },
+  { name: 'Voyageurs', state: 'MN', lat: 48.5, lon: -92.88 },
+  { name: 'White Sands', state: 'NM', lat: 32.78, lon: -106.17 },
+  { name: 'Wind Cave', state: 'SD', lat: 43.57, lon: -103.48 },
+  { name: 'Wrangell–St. Elias', state: 'AK', lat: 61.0, lon: -142.0 },
+  { name: 'Yellowstone', state: 'WY', lat: 44.6, lon: -110.5 },
+  { name: 'Yosemite', state: 'CA', lat: 37.83, lon: -119.5 },
+  { name: 'Zion', state: 'UT', lat: 37.3, lon: -113.05 },
+];
+
+// Names must match `parks` exactly, e.g. ['Yosemite', 'Joshua Tree'].
+export const visitedParks: string[] = [];
+
+export type Peak = {
+  name: string;
+  feet: number;
+  where: string; // range or park, e.g. 'Sierra Nevada'
+  when?: string; // e.g. 'Aug 2024'
+  note?: string;
 };
+
+// Mountains you've summited (or hiked). Example:
+// { name: 'Half Dome', feet: 8839, where: 'Yosemite', when: 'Jul 2023', note: 'Cables route.' },
+export const peaks: Peak[] = [];

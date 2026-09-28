@@ -57,9 +57,8 @@ export default function PagingDemo() {
   return (
     <div className="demo">
       <p className="demo__intro">
-        The kernel sets up 4-level paging with an identity map, so every virtual address maps to
-        the same physical address. Type a virtual address to see how the MMU splits it into table
-        indices and walks from CR3 down to a physical frame.
+        The kernel identity-maps memory, so a virtual address and its physical address are the
+        same number. Type one in to see which table entries the MMU walks to get there.
       </p>
       <div className="demo__controls">
         <label>
@@ -105,8 +104,7 @@ export default function PagingDemo() {
 
           {!result.canonical ? (
             <p className="demo__err mono">
-              ✗ #GP: non-canonical address. Bits 63:48 must sign-extend bit 47, so the CPU faults
-              before any table is touched. That's exception vector 13 in the IDT.
+              ✗ Non-canonical address. Bits 63:48 have to match bit 47, so the CPU raises #GP (vector 13) before it touches a single table.
             </p>
           ) : (
             <ol className="walk mono">
