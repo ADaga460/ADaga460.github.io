@@ -235,17 +235,123 @@ export const parks: Park[] = [
   { name: 'Zion', state: 'UT', lat: 37.3, lon: -113.05 },
 ];
 
-// Names must match `parks` exactly, e.g. ['Yosemite', 'Joshua Tree'].
-export const visitedParks: string[] = [];
+// US national parks I've been to. Names must match `parks` exactly.
+export const visitedParks: string[] = [
+  'Yosemite', 'Death Valley', 'Joshua Tree', 'Redwood', 'Sequoia', 'Kings Canyon', 'Pinnacles',
+  'Zion', 'Bryce Canyon', 'Arches', 'Canyonlands', 'Capitol Reef',
+  'Grand Canyon', 'Saguaro',
+  'Mount Rainier', 'North Cascades',
+  'Yellowstone', 'Grand Teton', 'Glacier',
+  'Great Sand Dunes', 'Carlsbad Caverns', 'Great Basin',
+  'Hawaiʻi Volcanoes', 'Haleakalā', 'Denali', 'Glacier Bay',
+];
 
-export type Peak = {
+// Short notes shown next to a national park.
+export const parkNotes: Record<string, string> = {
+  Yosemite: 'Half Dome',
+  Zion: 'Angels Landing',
+  'Grand Canyon': 'rim to rim',
+};
+
+export type Region =
+  | 'California'
+  | 'Southwest'
+  | 'Northwest & Rockies'
+  | 'Hawaii'
+  | 'Alaska'
+  | 'East'
+  | 'Canada'
+  | 'Mexico'
+  | 'Costa Rica';
+
+export const regionOfState = (st: string): Region =>
+  st === 'CA'
+    ? 'California'
+    : ['UT', 'AZ', 'NV', 'CO', 'NM'].includes(st)
+      ? 'Southwest'
+      : ['WA', 'OR', 'ID', 'MT', 'WY'].includes(st)
+        ? 'Northwest & Rockies'
+        : st === 'HI'
+          ? 'Hawaii'
+          : st === 'AK'
+            ? 'Alaska'
+            : 'East';
+
+export type Place = {
   name: string;
-  feet: number;
-  where: string; // range or park, e.g. 'Sierra Nevada'
-  when?: string; // e.g. 'Aug 2024'
+  kind: 'park' | 'ruins' | 'summit' | 'other';
+  region: Region;
+  lat: number;
+  lon: number;
+  feet?: number; // summits only
+  short?: string; // label for the peaks chart
   note?: string;
 };
 
-// Mountains you've summited (or hiked). Example:
-// { name: 'Half Dome', feet: 8839, where: 'Yosemite', when: 'Jul 2023', note: 'Cables route.' },
-export const peaks: Peak[] = [];
+// Everywhere else: state parks, other countries' parks, ruins, summits.
+export const places: Place[] = [
+  // California
+  { name: 'Mount Whitney', short: 'Whitney', kind: 'summit', region: 'California', lat: 36.5786, lon: -118.2923, feet: 14505 },
+  { name: 'Mount Williamson', short: 'Williamson', kind: 'summit', region: 'California', lat: 36.6561, lon: -118.3109, feet: 14379 },
+  { name: 'North Palisade', short: 'N. Palisade', kind: 'summit', region: 'California', lat: 37.0942, lon: -118.5147, feet: 14248 },
+  { name: 'Shastarama Point', short: 'Shastarama Pt.', kind: 'summit', region: 'California', lat: 41.385, lon: -122.19, feet: 11135, note: 'Sargents Ridge, Mount Shasta' },
+  { name: 'Mount Eddy', short: 'Eddy', kind: 'summit', region: 'California', lat: 41.3199, lon: -122.4789, feet: 9025 },
+  { name: 'Half Dome', kind: 'summit', region: 'California', lat: 37.7459, lon: -119.5332, feet: 8839, note: 'Yosemite' },
+  { name: 'Mount Diablo', short: 'Diablo', kind: 'summit', region: 'California', lat: 37.8816, lon: -121.9142, feet: 3849 },
+  { name: 'Black Mountain', short: 'Black Mtn.', kind: 'summit', region: 'California', lat: 37.3194, lon: -122.1453, feet: 2812 },
+  { name: 'Rancho San Antonio Preserve', kind: 'park', region: 'California', lat: 37.33, lon: -122.09 },
+  { name: 'Castle Rock State Park', kind: 'park', region: 'California', lat: 37.23, lon: -122.1 },
+  { name: 'Point Lobos', kind: 'park', region: 'California', lat: 36.52, lon: -121.95 },
+  { name: 'Big Sur', kind: 'other', region: 'California', lat: 36.27, lon: -121.81 },
+  { name: 'Julia Pfeiffer Burns State Park', kind: 'park', region: 'California', lat: 36.16, lon: -121.67 },
+  { name: 'Montaña de Oro State Park', kind: 'park', region: 'California', lat: 35.27, lon: -120.88 },
+  { name: 'Anza-Borrego Desert State Park', kind: 'park', region: 'California', lat: 33.26, lon: -116.4 },
+  { name: 'Humboldt Redwoods State Park', kind: 'park', region: 'California', lat: 40.31, lon: -123.97 },
+  { name: 'Lake Tahoe', kind: 'other', region: 'California', lat: 39.09, lon: -120.04 },
+
+  // Southwest
+  { name: 'Angels Landing', kind: 'summit', region: 'Southwest', lat: 37.2692, lon: -112.9481, feet: 5790, note: 'Zion' },
+  { name: 'Dead Horse Point State Park', kind: 'park', region: 'Southwest', lat: 38.47, lon: -109.74 },
+  { name: 'Kodachrome Basin State Park', kind: 'park', region: 'Southwest', lat: 37.5, lon: -111.99 },
+  { name: 'Great Salt Lake', kind: 'other', region: 'Southwest', lat: 41.1, lon: -112.5 },
+  { name: 'Colorado Rockies', kind: 'other', region: 'Southwest', lat: 39.6, lon: -106.0, note: 'drove through' },
+
+  // Hawaii
+  { name: 'Diamond Head', kind: 'summit', region: 'Hawaii', lat: 21.2619, lon: -157.8061, feet: 761 },
+  { name: 'Waiʻānapanapa State Park', kind: 'park', region: 'Hawaii', lat: 20.786, lon: -156.003 },
+  { name: 'Waimea Canyon', kind: 'other', region: 'Hawaii', lat: 22.07, lon: -159.66, note: 'hiked' },
+
+  // East
+  { name: 'Delaware Water Gap', kind: 'park', region: 'East', lat: 41.0, lon: -75.13 },
+
+  // Canada
+  { name: 'Banff National Park', kind: 'park', region: 'Canada', lat: 51.18, lon: -115.57 },
+  { name: 'Yoho National Park', kind: 'park', region: 'Canada', lat: 51.4, lon: -116.5 },
+  { name: 'Glacier National Park (Canada)', kind: 'park', region: 'Canada', lat: 51.3, lon: -117.5 },
+  { name: 'Jasper National Park', kind: 'park', region: 'Canada', lat: 52.87, lon: -118.08 },
+  { name: 'Mount Columbia', kind: 'other', region: 'Canada', lat: 52.147, lon: -117.44 },
+  { name: 'Mount Forbes', kind: 'other', region: 'Canada', lat: 51.86, lon: -116.93 },
+
+  // Mexico
+  { name: 'Chichén Itzá', kind: 'ruins', region: 'Mexico', lat: 20.683, lon: -88.568 },
+  { name: 'Teotihuacan', kind: 'ruins', region: 'Mexico', lat: 19.692, lon: -98.844 },
+  { name: 'Palenque', kind: 'ruins', region: 'Mexico', lat: 17.484, lon: -92.046 },
+  { name: 'Monte Albán', kind: 'ruins', region: 'Mexico', lat: 17.044, lon: -96.768 },
+  { name: 'Calakmul', kind: 'ruins', region: 'Mexico', lat: 18.105, lon: -89.81 },
+  { name: 'Lagunas de Montebello', kind: 'park', region: 'Mexico', lat: 16.11, lon: -91.67 },
+  { name: 'Hierve el Agua', kind: 'other', region: 'Mexico', lat: 16.866, lon: -96.276 },
+  { name: 'Yucatán', kind: 'other', region: 'Mexico', lat: 20.97, lon: -89.62 },
+  { name: 'Jalisco', kind: 'other', region: 'Mexico', lat: 20.66, lon: -103.35 },
+
+  // Costa Rica
+  { name: 'Manuel Antonio National Park', kind: 'park', region: 'Costa Rica', lat: 9.39, lon: -84.14 },
+  { name: 'Tapantí–Macizo de la Muerte National Park', kind: 'park', region: 'Costa Rica', lat: 9.72, lon: -83.78 },
+  { name: 'Barbilla National Park', kind: 'park', region: 'Costa Rica', lat: 9.97, lon: -83.45 },
+  { name: 'Irazú Volcano National Park', kind: 'park', region: 'Costa Rica', lat: 9.979, lon: -83.852 },
+];
+
+// John Muir Trail, Happy Isles to Whitney, through the main passes. [lon, lat]
+export const jmt: [number, number][] = [
+  [-119.558, 37.732], [-119.36, 37.873], [-119.074, 37.617], [-118.87, 37.37],
+  [-118.671, 37.112], [-118.46, 37.03], [-118.372, 36.694], [-118.2923, 36.5786],
+];

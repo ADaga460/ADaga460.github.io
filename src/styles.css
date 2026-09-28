@@ -343,17 +343,10 @@ details li::marker {
 }
 
 /* ---- Outside ---- */
-.parks__bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
-}
 .tabs {
   display: flex;
-  gap: 18px;
+  gap: 6px 18px;
+  flex-wrap: wrap;
 }
 .tabs button {
   font: 600 0.92rem var(--cond);
@@ -366,49 +359,88 @@ details li::marker {
   cursor: pointer;
   border-bottom: 2px solid transparent;
 }
+.tabs button:hover {
+  color: var(--ink);
+}
 .tabs button[aria-selected='true'] {
   color: var(--ink);
   border-color: var(--red);
 }
-.parks__count {
+.places__count {
   font-size: 0.8rem;
   color: var(--ink-2);
+  margin: 10px 0 8px;
 }
-.parks__map {
+.places__map {
   width: 100%;
   height: auto;
   display: block;
   background: var(--water-fill);
   border: 1px solid var(--ink);
 }
-.parks__land path {
+.land path {
   fill: var(--paper);
   stroke: var(--ink-2);
-  stroke-width: 0.6;
+  stroke-width: 0.7;
+  stroke-linejoin: round;
 }
-.parks__borders {
+.state-lines {
   fill: none;
   stroke: var(--rule);
-  stroke-width: 0.6;
+  stroke-width: 0.7;
   stroke-dasharray: 3 2;
 }
-.park path {
-  fill: var(--paper);
-  stroke: var(--muted);
-  stroke-width: 1.2;
-  cursor: default;
+.graticule {
+  fill: none;
+  stroke: var(--water);
+  stroke-opacity: 0.25;
+  stroke-width: 0.6;
 }
-.park.is-seen path {
+.route {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 2;
+  stroke-dasharray: 5 3;
+}
+.mark__hit {
+  fill: transparent;
+}
+.sym {
+  stroke-width: 1.2;
+}
+.sym--np {
   fill: var(--green);
   stroke: var(--ink);
 }
-.park.is-hover path {
-  stroke: var(--red);
-  stroke-width: 2;
+.sym--unseen {
+  fill: var(--paper);
+  stroke: var(--muted);
 }
-.park text {
-  font: 600 15px var(--cond);
-  letter-spacing: 0.04em;
+.sym--park {
+  fill: var(--green);
+  stroke: var(--paper);
+  stroke-width: 1;
+}
+.sym--summit {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+.sym--ruins {
+  fill: var(--paper);
+  stroke: var(--contour-index);
+  stroke-width: 1.8;
+}
+.sym--other {
+  fill: var(--ink);
+}
+.mark.is-hover .sym {
+  stroke: var(--red);
+}
+.mark text {
+  font: 600 14px var(--cond);
+  letter-spacing: 0.03em;
   fill: var(--ink);
   paint-order: stroke;
   stroke: var(--paper);
@@ -416,19 +448,47 @@ details li::marker {
   stroke-linejoin: round;
   pointer-events: none;
 }
-.parks__legend {
+.places__legend {
   font-size: 0.85rem;
   color: var(--ink-2);
   margin: 8px 0 0;
+  line-height: 1.9;
 }
-.swatch {
+.legend-sym {
   width: 14px;
-  height: 13px;
-  vertical-align: -1px;
-  margin: 0 4px 0 12px;
+  height: 14px;
+  vertical-align: -2px;
+  margin: 0 3px 0 10px;
 }
-.swatch:first-child {
+.legend-sym:first-child {
   margin-left: 0;
+}
+.route-key {
+  display: inline-block;
+  width: 22px;
+  margin: 0 4px 0 10px;
+  vertical-align: 4px;
+  border-top: 2px dashed var(--red);
+}
+.places__list {
+  margin: 18px 0 0;
+  display: grid;
+  gap: 8px;
+}
+.places__list div {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 12px;
+}
+.places__list dt {
+  font: 600 0.85rem var(--cond);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  padding-top: 3px;
+}
+.places__list dd {
+  margin: 0;
 }
 
 .skyline {
@@ -792,6 +852,10 @@ details li::marker {
   }
   .bitstrip {
     grid-template-columns: repeat(24, 1fr);
+  }
+  .places__list div {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
   .demo input {
     width: 100%;
