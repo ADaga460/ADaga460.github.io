@@ -284,21 +284,22 @@ export type Place = {
   lat: number;
   lon: number;
   feet?: number; // summit elevation, for hikes that top out
-  short?: string; // label for the peaks chart
+  short?: string; // label for the summits chart
+  range?: string; // mountain range, for summits
   note?: string;
 };
 
 // Everywhere else: hikes, state parks, other countries' parks, ruins.
 export const places: Place[] = [
   // California
-  { name: 'Mount Whitney', short: 'Whitney', kind: 'hike', region: 'California', lat: 36.5786, lon: -118.2923, feet: 14505 },
-  { name: 'Mount Williamson', short: 'Williamson', kind: 'hike', region: 'California', lat: 36.6561, lon: -118.3109, feet: 14379 },
-  { name: 'North Palisade', short: 'N. Palisade', kind: 'hike', region: 'California', lat: 37.0942, lon: -118.5147, feet: 14248 },
-  { name: 'Shastarama Point', short: 'Shastarama Pt.', kind: 'hike', region: 'California', lat: 41.385, lon: -122.19, feet: 11135, note: 'Sargents Ridge, Mount Shasta' },
-  { name: 'Mount Eddy', short: 'Eddy', kind: 'hike', region: 'California', lat: 41.3199, lon: -122.4789, feet: 9025 },
-  { name: 'Half Dome', kind: 'hike', region: 'California', lat: 37.7459, lon: -119.5332, feet: 8839, note: 'Yosemite' },
-  { name: 'Mount Diablo', short: 'Diablo', kind: 'hike', region: 'California', lat: 37.8816, lon: -121.9142, feet: 3849 },
-  { name: 'Black Mountain', short: 'Black Mtn.', kind: 'hike', region: 'California', lat: 37.3194, lon: -122.1453, feet: 2812 },
+  { name: 'Mount Whitney', range: 'Sierra Nevada', short: 'Whitney', kind: 'hike', region: 'California', lat: 36.5786, lon: -118.2923, feet: 14505 },
+  { name: 'Mount Williamson', range: 'Sierra Nevada', short: 'Williamson', kind: 'hike', region: 'California', lat: 36.6561, lon: -118.3109, feet: 14379 },
+  { name: 'North Palisade', range: 'Sierra Nevada', short: 'N. Palisade', kind: 'hike', region: 'California', lat: 37.0942, lon: -118.5147, feet: 14248 },
+  { name: 'Shastarama Point', range: 'Cascades', short: 'Shastarama Pt.', kind: 'hike', region: 'California', lat: 41.385, lon: -122.19, feet: 11135, note: 'Sargents Ridge, Mount Shasta' },
+  { name: 'Mount Eddy', range: 'Klamath Mountains', short: 'Eddy', kind: 'hike', region: 'California', lat: 41.3199, lon: -122.4789, feet: 9025 },
+  { name: 'Half Dome', range: 'Sierra Nevada', kind: 'hike', region: 'California', lat: 37.7459, lon: -119.5332, feet: 8839, note: 'Yosemite' },
+  { name: 'Mount Diablo', range: 'Diablo Range', short: 'Diablo', kind: 'hike', region: 'California', lat: 37.8816, lon: -121.9142, feet: 3849 },
+  { name: 'Black Mountain', range: 'Santa Cruz Mountains', short: 'Black Mtn.', kind: 'hike', region: 'California', lat: 37.3194, lon: -122.1453, feet: 2812 },
   { name: 'Rancho San Antonio Preserve', kind: 'hike', region: 'California', lat: 37.33, lon: -122.09 },
   { name: 'Castle Rock', kind: 'hike', region: 'California', lat: 37.23, lon: -122.1 },
   { name: 'Point Lobos', kind: 'hike', region: 'California', lat: 36.52, lon: -121.95 },
@@ -311,14 +312,14 @@ export const places: Place[] = [
   { name: 'Lake Tahoe', kind: 'hike', region: 'California', lat: 39.09, lon: -120.04 },
 
   // Southwest
-  { name: 'Angels Landing', kind: 'hike', region: 'Southwest', lat: 37.2692, lon: -112.9481, feet: 5790, note: 'Zion' },
+  { name: 'Angels Landing', range: 'Zion Canyon', kind: 'hike', region: 'Southwest', lat: 37.2692, lon: -112.9481, feet: 5790, note: 'Zion' },
   { name: 'Dead Horse Point State Park', kind: 'park', region: 'Southwest', lat: 38.47, lon: -109.74 },
   { name: 'Kodachrome Basin State Park', kind: 'park', region: 'Southwest', lat: 37.5, lon: -111.99 },
   { name: 'Great Salt Lake', kind: 'other', region: 'Southwest', lat: 41.1, lon: -112.5 },
   { name: 'Colorado Rockies', kind: 'other', region: 'Southwest', lat: 39.6, lon: -106.0, note: 'drove through' },
 
   // Hawaii
-  { name: 'Diamond Head', kind: 'hike', region: 'Hawaii', lat: 21.2619, lon: -157.8061, feet: 761 },
+  { name: 'Diamond Head', range: 'Oʻahu', kind: 'hike', region: 'Hawaii', lat: 21.2619, lon: -157.8061, feet: 761 },
   { name: 'Waiʻānapanapa State Park', kind: 'park', region: 'Hawaii', lat: 20.786, lon: -156.003 },
   { name: 'Waimea Canyon', kind: 'hike', region: 'Hawaii', lat: 22.07, lon: -159.66 },
 
@@ -330,8 +331,8 @@ export const places: Place[] = [
   { name: 'Yoho National Park', kind: 'park', region: 'Canada', lat: 51.4, lon: -116.5 },
   { name: 'Glacier National Park (Canada)', kind: 'park', region: 'Canada', lat: 51.3, lon: -117.5 },
   { name: 'Jasper National Park', kind: 'park', region: 'Canada', lat: 52.87, lon: -118.08 },
-  { name: 'Mount Columbia', short: 'Columbia', kind: 'hike', region: 'Canada', lat: 52.147, lon: -117.44, feet: 12294 },
-  { name: 'Mount Forbes', short: 'Forbes', kind: 'hike', region: 'Canada', lat: 51.86, lon: -116.93, feet: 11852 },
+  { name: 'Mount Columbia', range: 'Canadian Rockies', short: 'Columbia', kind: 'hike', region: 'Canada', lat: 52.147, lon: -117.44, feet: 12294 },
+  { name: 'Mount Forbes', range: 'Canadian Rockies', short: 'Forbes', kind: 'hike', region: 'Canada', lat: 51.86, lon: -116.93, feet: 11852 },
 
   // Mexico
   { name: 'Chichén Itzá', kind: 'ruins', region: 'Mexico', lat: 20.683, lon: -88.568 },

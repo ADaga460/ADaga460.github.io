@@ -8,6 +8,7 @@ import type { GeometryCollection, Topology } from 'topojson-specification';
 import type { FeatureCollection } from 'geojson';
 import us from 'us-atlas/states-10m.json';
 import neighborsJson from '../geo/neighbors.json';
+import Tiles from './Tiles';
 import {
   jmt,
   parkNotes,
@@ -237,25 +238,6 @@ export default function Atlas() {
     else flyTo(seenMarks.filter((m) => m.region === r), 30);
   };
 
-  // Tiles covering the viewport at the zoom level closest to the current scale.
-  const tiles = useMemo(() => {
-    if (base !== 'terrain') return [];
-    const z = Math.max(0, Math.min(MAX_TILE_Z, Math.round(Math.log2((t.k * WORLD) / 256))));
-    const n = 2 ** z;
-    const size = (t.k * WORLD) / n;
-    const out: { key: string; href: string; x: number; y: number; s: number }[] = [];
-    const x0 = Math.floor(-t.x / size);
-    const x1 = Math.floor((w - t.x) / size);
-    const y0 = Math.max(0, Math.floor(-t.y / size));
-    const y1 = Math.min(n - 1, Math.floor((h - t.y) / size));
-    for (let ty = y0; ty <= y1; ty++)
-      for (let tx = x0; tx <= x1; tx++) {
-        const wx = ((tx % n) + n) % n;
-        out.push({ key: `${z}/${tx}/${ty}`, href: TILE_URL(z, wx, ty), x: t.x + tx * size, y: t.y + ty * size, s: size });
-      }
-    return out;
-  }, [t, w, h, base]);
-
   const land = useMemo(
     () => (
       <>
@@ -352,19 +334,9 @@ export default function Atlas() {
         }}
         onPointerLeave={() => (engaged.current = false)}
       >
+        {base === 'terrain' && <Tiles t={t} w={w} h={h} world={WORLD} maxZ={MAX_TILE_Z} url={TILE_URL} />}
         <svg ref={svg} width={w} height={h} className="atlas__map" role="img" aria-label="Map of places I've been">
-          <rect width={w} height={h} className="water" />
-          {tiles.map((tl) => (
-            <image
-              key={tl.key}
-              href={tl.href}
-              x={tl.x}
-              y={tl.y}
-              width={tl.s + 0.6}
-              height={tl.s + 0.6}
-              preserveAspectRatio="none"
-            />
-          ))}
+          {base === 'plain' && <rect width={w} height={h} className="water" />}
           <g transform={t.toString()}>{land}</g>
           {drawn.out.map(({ m, x, y }) => {
             const side = drawn.labels.get(m.name);

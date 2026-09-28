@@ -459,8 +459,23 @@ details li::marker {
 }
 
 /* Terrain base map */
-.atlas__frame--terrain .water {
-  fill: #b4cfe3;
+.atlas__frame--terrain {
+  background: #b4cfe3;
+}
+.atlas__tiles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.atlas__tiles img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  user-select: none;
+}
+.atlas__map {
+  position: relative;
 }
 .land--terrain path {
   stroke: rgba(60, 50, 40, 0.55);
@@ -469,9 +484,6 @@ details li::marker {
 .atlas__frame--terrain .state-lines {
   stroke: rgba(60, 50, 40, 0.4);
   stroke-dasharray: 3 3;
-}
-.atlas__map image {
-  pointer-events: none;
 }
 .atlas__layers {
   position: absolute;
@@ -695,39 +707,73 @@ details li::marker {
   color: var(--muted);
 }
 
-.skyline {
+.skyline__summary {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  color: var(--ink-2);
+}
+.skyline__scroll {
   overflow-x: auto;
 }
 .skyline svg {
   width: 100%;
-  min-width: 620px;
+  min-width: 640px;
   height: auto;
   display: block;
 }
-.peak path {
-  fill: #e6dcc5;
+.grid line {
+  stroke: var(--contour);
+  stroke-width: 0.7;
+}
+.grid--index line {
   stroke: var(--contour-index);
-  stroke-width: 1.2;
-  stroke-linejoin: round;
-  cursor: pointer;
-  transition: fill 0.15s;
-}
-.peak.is-active path {
-  fill: #c9ad86;
-}
-.peak text {
-  font: 600 14px var(--cond);
-  letter-spacing: 0.04em;
-  fill: var(--ink);
-  pointer-events: none;
-}
-.skyline__ref {
-  stroke: var(--red);
-  stroke-dasharray: 4 4;
+  stroke-opacity: 0.55;
   stroke-width: 1;
 }
-.skyline__reftext {
-  font: 12px var(--mono);
+.grid text,
+.grid__unit {
+  font: 11px var(--mono);
+  fill: var(--muted);
+}
+.grid--index text {
+  fill: var(--contour-index);
+}
+.peak {
+  cursor: pointer;
+  outline: none;
+}
+.peak path {
+  stroke: #6b5a45;
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+  transition: stroke 0.15s;
+}
+.peak:hover path,
+.peak.is-active path {
+  stroke: var(--red);
+  stroke-width: 2;
+}
+.peak:focus-visible path {
+  stroke: var(--red);
+  stroke-width: 2.5;
+}
+.peak__ft {
+  font: 500 11px var(--mono);
+  fill: var(--ink-2);
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 3px;
+}
+.peak.is-active .peak__ft {
+  fill: var(--red);
+  font-weight: 700;
+}
+.peak__name {
+  font: 600 14px var(--cond);
+  letter-spacing: 0.03em;
+  fill: var(--ink);
+}
+.peak.is-active .peak__name {
   fill: var(--red);
 }
 .skyline__base {
@@ -735,8 +781,11 @@ details li::marker {
   stroke-width: 1.5;
 }
 .skyline__detail {
-  margin: 6px 0 0;
-  font-size: 0.95rem;
+  margin: 4px 0 0;
+  font-size: 1rem;
+}
+.skyline__detail .mono {
+  font-size: 0.85rem;
 }
 
 /* ---- Footer legend ---- */
