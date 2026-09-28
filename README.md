@@ -2,12 +2,11 @@
 
 My personal site: React + TypeScript + Vite, no UI framework.
 
-Scrolling the page is a dive: a depth gauge tracks you from the surface (userspace) down to the hadal zone (bare metal).
+Interactive pieces:
 
-- **Sonar hero**: a canvas PPI scope. Click it to ping.
-- **Focus areas**: pick systems, computer vision, or marine robotics and related work lights up across the page.
 - **Project demos**: a byte-level encoder for the `dist-kv-store` wire protocol, and an x86_64 page-walk visualizer for the microkernel.
-- **Terminal**: a small shell at the bottom (`help`, `ls`, `cat kv`, ...).
+- **Filters**: click a tech tag on a project to filter by it; click a skill to see where it's been used.
+- **Terminal**: a small shell in the contact section (`help`, `ls`, `cat kv`, ...).
 
 ## Develop
 

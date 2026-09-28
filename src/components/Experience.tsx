@@ -1,22 +1,17 @@
 import { useState } from 'react';
-import { experience, type FocusId } from '../data';
+import { experience } from '../data';
 import Section from './Section';
-import FocusFilter from './FocusFilter';
 
-type Props = { focus: FocusId | null; setFocus: (f: FocusId | null) => void };
-
-export default function Experience({ focus, setFocus }: Props) {
+export default function Experience() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <Section id="experience" title="Experience" kicker="Click a role to expand it.">
-      <FocusFilter focus={focus} setFocus={setFocus} />
+    <Section id="experience" title="Experience">
       <ol className="timeline">
         {experience.map((e, i) => {
           const isOpen = open === i;
-          const dimmed = focus !== null && !e.focus.includes(focus);
           return (
-            <li key={i} className={`timeline__item ${dimmed ? 'is-dimmed' : ''} ${isOpen ? 'is-open' : ''}`}>
+            <li key={i} className={`timeline__item ${isOpen ? 'is-open' : ''}`}>
               <span className="timeline__node" aria-hidden="true" />
               <button className="xp" onClick={() => setOpen(isOpen ? null : i)} aria-expanded={isOpen}>
                 <div className="xp__top">

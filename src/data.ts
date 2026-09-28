@@ -1,66 +1,46 @@
 // All site content lives here so it can be edited without touching components.
 
-export type FocusId = 'systems' | 'vision' | 'marine';
-
-const unsplash = (id: string, w = 1200) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=70`;
-
 export const profile = {
   name: 'Aarav Daga',
-  tagline: 'I live below your framework.',
-  roles: [
-    'systems programmer',
-    'kernel tinkerer',
-    'CUDA debugger',
-    'future marine roboticist',
-    'CS @ Penn State',
-  ],
   location: 'State College, PA',
   email: 'aaravdaga@gmail.com',
   github: 'https://github.com/ADaga460',
   linkedin: 'https://linkedin.com/in/aarav-daga-4325b5237',
   // Drop a photo at public/headshot.jpg and set this to '/headshot.jpg'.
   headshot: null as string | null,
+  intro:
+    'CS student at Penn State. I write systems and computer vision software, and I want to point it at ocean and space science.',
   bio: [
-    "I'm a computer science student at Penn State (minor in Computer Engineering) who likes working as close to the metal as I can get: kernels, network protocols, CUDA kernels, and firmware.",
-    "Most recently I spent the summer as a Platform Engineering Intern at Lockheed Martin, and before that I was debugging a multi-GPU sonar Gaussian-splatting pipeline that turns underwater video into synthetic sonar imagery. That project is where systems, vision, and the ocean started to overlap for me.",
+    "I'm studying computer science at Penn State with a minor in Computer Engineering, graduating in December 2027. Most of my work is in C, C++, Go, and CUDA: a hobby kernel, a key-value store, GPU training pipelines, and ESP32 firmware.",
+    "I like systems and computer vision because that's where software has to meet the hardware. Sensors, memory, bandwidth, and timing each add constraints, and working inside those limits is more interesting to me than stacking another abstraction layer between my code and the physical world.",
+    "I also care a lot about the environment. I've spent time in most of North America's major biomes, especially across California, and that's why I want my work to end up in marine and space science, on the kind of instruments, vehicles, and imaging pipelines built at places like MBARI and NASA.",
   ],
-  goals:
-    "Next up is grad school, plus internships and research in systems programming, computer vision, and marine robotics. I want to build the software that lets machines see and move reliably in places where there's no cloud and no second chance.",
+  plans:
+    "I'm planning to go to grad school as a way into that research. I'm also open to full-time engineering roles in the same space, either with part-time grad study or on their own.",
 };
 
-export const focusAreas: {
-  id: FocusId;
-  title: string;
-  blurb: string;
-  image: string;
-  interests: string[];
-}[] = [
-  {
-    id: 'systems',
-    title: 'Systems Programming',
-    blurb:
-      'Kernels, distributed storage, concurrency, and making things fast. Knowing exactly what the machine is doing underneath the code.',
-    image: unsplash('1518770660439-4636190af475', 900),
-    interests: ['OS internals', 'Distributed systems', 'Performance', 'Networking'],
-  },
-  {
-    id: 'vision',
-    title: 'Computer Vision',
-    blurb:
-      '3D reconstruction and neural rendering on GPUs. Custom CUDA rasterizers, multi-GPU training, and figuring out where the time goes.',
-    image: unsplash('1504639725590-34d0984388bd', 900),
-    interests: ['Gaussian splatting', 'CUDA', 'Distributed training', '3D reconstruction'],
-  },
-  {
-    id: 'marine',
-    title: 'Marine Robotics',
-    blurb:
-      'Perception and embedded control for underwater systems. Sonar imaging, low-latency firmware, and robots that work without a network.',
-    image: unsplash('1551244072-5d12893278ab', 900),
-    interests: ['Sonar perception', 'Embedded / RTOS', 'Sensor fusion', 'Autonomy'],
-  },
-];
+export const interests = {
+  building: [
+    {
+      title: 'Systems programming',
+      text: 'Kernels, storage engines, networking, and concurrency. Code where memory layout, latency, and failure modes matter.',
+    },
+    {
+      title: 'Computer vision',
+      text: 'Reconstruction and imaging on GPUs, especially from unusual sensors like sonar, and making those pipelines fast enough to be useful.',
+    },
+  ],
+  applying: [
+    {
+      title: 'Ocean science',
+      text: 'Underwater perception, autonomous vehicles, and the software researchers use to observe environments that are hard to reach.',
+    },
+    {
+      title: 'Space & Earth observation',
+      text: 'Flight and instrument software, onboard data processing, and imaging pipelines for planetary and Earth science.',
+    },
+  ],
+};
 
 export type Experience = {
   org: string;
@@ -68,7 +48,6 @@ export type Experience = {
   role: string;
   dates: string;
   location: string;
-  focus: FocusId[];
   stack: string[];
   stats: { value: string; label: string }[];
   summary: string;
@@ -81,7 +60,6 @@ export const experience: Experience[] = [
     role: 'Platform Engineering Intern',
     dates: 'May 2026 – Aug 2026',
     location: 'Remote',
-    focus: ['systems'],
     stack: ['Go', 'React', 'Kubernetes', 'Jest'],
     stats: [
       { value: '9', label: 'merged MRs' },
@@ -104,7 +82,6 @@ export const experience: Experience[] = [
     role: 'Software Engineering Intern',
     dates: 'Jan 2026 – Apr 2026',
     location: 'State College, PA',
-    focus: ['vision', 'marine', 'systems'],
     stack: ['CUDA', 'PyTorch', 'NCCL', 'HPC'],
     stats: [
       { value: '35.7 dB', label: 'PSNR' },
@@ -126,11 +103,10 @@ export const experience: Experience[] = [
     role: 'Lead Software Developer',
     dates: 'Sep 2025 – Mar 2026',
     location: 'State College, PA',
-    focus: ['systems', 'marine'],
     stack: ['C++', 'Python', 'ESP32', 'Bluetooth'],
     stats: [
-      { value: '<200ms', label: 'audio latency' },
-      { value: '5', label: 'person team led' },
+      { value: '<200 ms', label: 'audio latency' },
+      { value: '5', label: 'person team' },
     ],
     summary: 'Real-time speech-translation glasses built on an ESP32.',
     bullets: [
@@ -148,10 +124,8 @@ export type Project = {
   name: string;
   dates: string;
   stack: string[];
-  focus: FocusId[];
   short: string;
   bullets: string[];
-  image?: string;
   repo?: string;
   demo?: DemoId;
   featured?: boolean;
@@ -163,16 +137,14 @@ export const projects: Project[] = [
     name: 'Distributed Key-Value Store',
     dates: 'Jan & Sep 2026',
     stack: ['C++20', 'ASIO', 'GTest', 'TCP'],
-    focus: ['systems'],
     short:
-      'A key-value store written from scratch in C++20, with an async ASIO server, a custom binary wire protocol, and a transactional bank-transfer layer.',
+      'A key-value store in C++20 with an async ASIO server, a custom binary wire protocol, and a transactional layer for account transfers.',
     bullets: [
       'Async ASIO server driven by a thread pool, so no thread is pinned to a connection.',
       'Custom length-prefixed binary protocol. The decoder rejects malformed frames instead of misreading them.',
       'Storage-engine interface (ordered map with prefix scans) built so persistence and Raft replication can be added later.',
       'Concurrency-safe transaction layer with deadlock-free money transfers, covered by 46 tests.',
     ],
-    image: unsplash('1558494949-ef010cbdcc31'),
     repo: 'https://github.com/ADaga460/dist-kv-store',
     demo: 'protocol',
     featured: true,
@@ -182,7 +154,6 @@ export const projects: Project[] = [
     name: 'x86_64 Microkernel',
     dates: 'Dec – Jan 2025',
     stack: ['C', 'x86 Assembly', 'NASM', 'QEMU'],
-    focus: ['systems'],
     short:
       'A 1,200-line microkernel that boots on real hardware into long mode with 4-level paging, a full IDT, and ring-3 syscall gates.',
     bullets: [
@@ -190,7 +161,6 @@ export const projects: Project[] = [
       'IDT with 32 exception handlers, including error-code handling and stack-frame management.',
       'Syscall infrastructure with dedicated ring-3 gates for kernel/userspace communication.',
     ],
-    image: unsplash('1580584126903-c17d41830450'),
     repo: 'https://github.com/ADaga460/microkernel',
     demo: 'paging',
     featured: true,
@@ -200,7 +170,6 @@ export const projects: Project[] = [
     name: 'GitContext',
     dates: 'Nov – Dec 2025',
     stack: ['C', 'SQLite', 'JSONL', 'GitHub Actions'],
-    focus: ['systems'],
     short:
       'A Unix CLI in C that attaches notes and TODOs to Git commits by reading and writing directly inside .git/.',
     bullets: [
@@ -208,7 +177,6 @@ export const projects: Project[] = [
       'JSONL note storage, a SQLite TODO manager, and post-commit/merge/pull hook automation.',
       'Diff-safe merge-driver behavior, repository-scoped daemon mode, and CI/CD with GitHub Actions.',
     ],
-    image: unsplash('1555066931-4365d14bab8c'),
     repo: 'https://github.com/ADaga460/gitnotes',
     featured: true,
   },
@@ -217,24 +185,20 @@ export const projects: Project[] = [
     name: 'Sonar Gaussian Splatting (multi-GPU)',
     dates: 'Jan – Apr 2026',
     stack: ['CUDA', 'PyTorch', 'NCCL'],
-    focus: ['vision', 'marine', 'systems'],
     short:
-      'Took a CUDA Gaussian-splatting framework for synthetic sonar imagery from single-GPU to distributed training. Done with Lockheed Martin.',
+      'Took a CUDA Gaussian-splatting framework for synthetic sonar imagery from single-GPU to distributed training, with Lockheed Martin.',
     bullets: [
       'Fixed 11 distributed-training bugs: sharding, gradient all_reduce, NCCL deadlocks, cross-rank densification.',
       'Reached 35.7 dB PSNR / 0.98 SSIM on synthetic underwater imagery.',
       'Benchmarked and profiled to identify per-pixel rasterization as the bottleneck.',
     ],
-    image: unsplash('1544551763-46a013bb70d5'),
   },
   {
     id: 'glasses',
     name: 'Speech-Translation Glasses',
     dates: 'Sep 2025 – Mar 2026',
     stack: ['C++', 'ESP32', 'Bluetooth', 'OLED'],
-    focus: ['systems', 'marine'],
-    short:
-      'Wearable ESP32 glasses that caption translated speech in real time, with under 200 ms of audio latency.',
+    short: 'ESP32 glasses that caption translated speech in real time, with under 200 ms of audio latency.',
     bullets: [
       'Custom firmware for audio ingestion, processing, and a Bluetooth display path.',
       'Drivers for the microphone, OLED, and Bluetooth modules, with debounced I/O.',
@@ -245,8 +209,7 @@ export const projects: Project[] = [
     name: 'CPU Emulator',
     dates: '2025',
     stack: ['C'],
-    focus: ['systems'],
-    short: 'An instruction-level CPU emulator in C: fetch, decode, execute, one opcode at a time.',
+    short: 'An instruction-level CPU emulator in C.',
     bullets: [],
     repo: 'https://github.com/ADaga460/emulator',
   },
@@ -255,8 +218,7 @@ export const projects: Project[] = [
     name: 'Black Hole Simulator',
     dates: '2025',
     stack: ['C++', 'OpenGL'],
-    focus: ['vision'],
-    short: 'A numerically stable black-hole physics and rendering sim, built to learn modern C++ in depth.',
+    short: 'A black-hole physics and rendering simulation in C++ and OpenGL, written to learn modern C++.',
     bullets: [],
     repo: 'https://github.com/ADaga460/blackhole-sim',
   },
@@ -265,9 +227,8 @@ export const projects: Project[] = [
     name: 'NewsTexter',
     dates: '2026',
     stack: ['Python', 'FastAPI', 'Docker', 'LLMs'],
-    focus: [],
     short:
-      'Finds under-covered international news, has an LLM summarize and rank it, and texts it out. You can text back to ask follow-up questions.',
+      'Collects under-covered international news, uses an LLM to rank and summarize it, and sends the results by text. It also answers questions sent back by SMS.',
     bullets: [],
     repo: 'https://github.com/ADaga460/newstexter',
   },
@@ -308,13 +269,3 @@ export const education = {
     ],
   } as Record<string, { code: string; name: string }[]>,
 };
-
-// Depth-gauge zones, one per section. Scrolling = diving.
-export const zones = [
-  { id: 'surface', label: 'Surface', depth: 0, ring: 'userspace' },
-  { id: 'about', label: 'Epipelagic', depth: 200, ring: 'libc' },
-  { id: 'experience', label: 'Mesopelagic', depth: 1000, ring: 'syscalls' },
-  { id: 'projects', label: 'Bathypelagic', depth: 4000, ring: 'ring 0' },
-  { id: 'education', label: 'Abyssopelagic', depth: 6000, ring: 'firmware' },
-  { id: 'contact', label: 'Hadal', depth: 10935, ring: 'bare metal' },
-];

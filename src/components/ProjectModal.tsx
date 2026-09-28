@@ -28,7 +28,6 @@ export default function ProjectModal({ project: p, onClose }: { project: Project
         aria-labelledby="modal-title"
         onClick={(e) => e.stopPropagation()}
       >
-        {p.image && <div className="modal__img" style={{ backgroundImage: `url(${p.image})` }} />}
         <button ref={closeRef} className="modal__close" onClick={onClose} aria-label="Close">
           ×
         </button>
@@ -52,7 +51,7 @@ export default function ProjectModal({ project: p, onClose }: { project: Project
           </ul>
           {p.repo && (
             <a className="btn btn--sm" href={p.repo} target="_blank" rel="noreferrer">
-              View source on GitHub ↗
+              Source on GitHub
             </a>
           )}
           {p.demo === 'protocol' && <ProtocolDemo />}

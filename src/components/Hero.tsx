@@ -1,30 +1,19 @@
-import { profile } from '../data';
-import { useTypewriter } from '../hooks';
-import Sonar from './Sonar';
+import { experience, profile } from '../data';
 
 export default function Hero() {
-  const role = useTypewriter(profile.roles);
+  const latest = experience[0];
 
   return (
-    <section id="surface" className="hero">
+    <section id="top" className="hero">
       <div className="hero__text">
-        <p className="eyebrow">
-          <span className="dot" /> Open to Summer 2027 internships & research
-        </p>
-        <h1>
-          Hi, I'm <span className="grad">{profile.name.split(' ')[0]}</span>.
-        </h1>
-        <p className="hero__role mono">
-          <span className="muted">$</span> {role}
-          <span className="caret" aria-hidden="true" />
-        </p>
-        <p className="hero__lede">
-          {profile.tagline} I work on kernels, distributed systems, and GPU code, and I'm aiming
-          that toward <strong>computer vision</strong> and <strong>marine robotics</strong>.
-        </p>
+        <h1>{profile.name}</h1>
+        <p className="hero__lede">{profile.intro}</p>
         <div className="hero__cta">
           <a className="btn btn--primary" href="#projects">
-            Dive into projects ↓
+            Projects
+          </a>
+          <a className="btn" href={`mailto:${profile.email}`}>
+            Email
           </a>
           <a className="btn" href={profile.github} target="_blank" rel="noreferrer">
             GitHub
@@ -34,13 +23,30 @@ export default function Hero() {
           </a>
         </div>
       </div>
-      <div className="hero__scope">
-        <Sonar />
-        <p className="hero__hint mono">click the scope to ping</p>
-      </div>
-      <a href="#about" className="hero__scroll" aria-label="Scroll down">
-        <span />
-      </a>
+      <dl className="facts">
+        <div>
+          <dt>Studying</dt>
+          <dd>B.S. Computer Science, Penn State · Dec 2027</dd>
+        </div>
+        <div>
+          <dt>Most recently</dt>
+          <dd>
+            {latest.role}, {latest.org}
+          </dd>
+        </div>
+        <div>
+          <dt>Work</dt>
+          <dd>Systems programming · Computer vision</dd>
+        </div>
+        <div>
+          <dt>Aiming for</dt>
+          <dd>Marine & space science</dd>
+        </div>
+        <div>
+          <dt>Looking for</dt>
+          <dd>Summer 2027 internships & research</dd>
+        </div>
+      </dl>
     </section>
   );
 }

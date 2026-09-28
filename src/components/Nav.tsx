@@ -8,7 +8,7 @@ const links = [
   { id: 'education', label: 'Education' },
   { id: 'contact', label: 'Contact' },
 ];
-const ids = ['surface', ...links.map((l) => l.id)];
+const ids = ['top', ...links.map((l) => l.id)];
 
 export default function Nav() {
   const active = useActiveSection(ids);
@@ -16,8 +16,8 @@ export default function Nav() {
 
   return (
     <header className="nav">
-      <a href="#surface" className="nav__brand" onClick={() => setOpen(false)}>
-        <span className="nav__prompt">~/</span>aarav
+      <a href="#top" className="nav__brand" onClick={() => setOpen(false)}>
+        Aarav Daga
       </a>
       <button
         className="nav__toggle"

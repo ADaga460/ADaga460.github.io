@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
-import { education, experience, focusAreas, profile, projects, skills } from '../data';
+import { education, experience, profile, projects, skills } from '../data';
 
 type Line = { kind: 'in' | 'out'; content: ReactNode };
 
@@ -22,12 +22,8 @@ const COMMANDS: Record<string, { help: string; run: (args: string[]) => ReactNod
       </div>
     ),
   },
-  whoami: { help: 'who is this', run: () => `${profile.name}. ${profile.bio[0]}` },
-  goals: { help: "what I'm working toward", run: () => profile.goals },
-  focus: {
-    help: 'my three focus areas',
-    run: () => focusAreas.map((f) => `• ${f.title}: ${f.interests.join(', ')}`).join('\n'),
-  },
+  whoami: { help: 'short bio', run: () => profile.bio.join('\n\n') },
+  plans: { help: 'grad school & career plans', run: () => profile.plans },
   experience: {
     help: 'where I have worked',
     run: () => experience.map((e) => `${e.dates.padEnd(22)} ${e.role} @ ${e.org}`).join('\n'),
@@ -73,29 +69,11 @@ const COMMANDS: Record<string, { help: string; run: (args: string[]) => ReactNod
       </>
     ),
   },
-  sonar: {
-    help: 'surface to the sonar',
-    run: () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return 'ascending… (decompression stops skipped)';
-    },
-  },
   clear: { help: 'clear the screen', run: () => null },
 };
 
-const EASTER: Record<string, string> = {
-  sudo: 'aarav is not in the sudoers file. This incident will be reported.',
-  'rm -rf /': 'nice try. the kernel has ring-3 gates for a reason.',
-  vim: 'you are now trapped. (just kidding, type :q)',
-  ':q': 'see? easy.',
-  exit: "there's no leaving the hadal zone. try \"sonar\".",
-  make: 'make: *** No rule to make target. Did you mean "hire"?',
-  hire: `great idea → ${profile.email}`,
-};
-
 const BANNER: Line[] = [
-  { kind: 'out', content: 'aarav-os 0.1 (x86_64) · tty0' },
-  { kind: 'out', content: 'Type "help" to see commands. Tab completes, ↑/↓ for history.' },
+  { kind: 'out', content: 'Type "help" to list commands. Tab completes, ↑/↓ for history.' },
 ];
 
 export default function Terminal() {
@@ -118,9 +96,7 @@ export default function Terminal() {
     const [name, ...args] = cmdline.split(/\s+/);
     if (name === 'clear') return setLines([]);
     let out: ReactNode;
-    if (EASTER[cmdline]) out = EASTER[cmdline];
-    else if (EASTER[name]) out = EASTER[name];
-    else if (COMMANDS[name]) out = COMMANDS[name].run(name === 'ls' ? [] : args);
+    if (COMMANDS[name]) out = COMMANDS[name].run(name === 'ls' ? [] : args);
     else out = `${name}: command not found. Type "help".`;
     setLines((l) => [...l, { kind: 'in', content: cmdline }, { kind: 'out', content: out }]);
   };
@@ -157,7 +133,7 @@ export default function Terminal() {
     }
   };
 
-  const quick = ['help', 'whoami', 'goals', 'ls', 'cat kv', 'contact'];
+  const quick = ['help', 'whoami', 'plans', 'ls', 'cat kv', 'contact'];
 
   return (
     <div className="term" onClick={() => inputRef.current?.focus({ preventScroll: true })}>

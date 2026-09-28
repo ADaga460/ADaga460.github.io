@@ -1,20 +1,13 @@
-import { useEffect, useState } from 'react';
-import { projects, type FocusId, type Project } from '../data';
+import { useState } from 'react';
+import { projects, type Project } from '../data';
 import Section from './Section';
-import FocusFilter from './FocusFilter';
 import ProjectModal from './ProjectModal';
 
-type Props = { focus: FocusId | null; setFocus: (f: FocusId | null) => void };
-
-export default function Projects({ focus, setFocus }: Props) {
+export default function Projects() {
   const [selected, setSelected] = useState<Project | null>(null);
   const [tech, setTech] = useState<string | null>(null);
 
-  // Clear the tech filter when the focus filter changes, so the two don't fight.
-  useEffect(() => setTech(null), [focus]);
-
-  const matches = (p: Project) =>
-    (focus === null || p.focus.includes(focus)) && (tech === null || p.stack.includes(tech));
+  const matches = (p: Project) => tech === null || p.stack.includes(tech);
 
   const featured = projects.filter((p) => p.featured);
   const others = projects.filter((p) => !p.featured);
@@ -49,9 +42,8 @@ export default function Projects({ focus, setFocus }: Props) {
     <Section
       id="projects"
       title="Projects"
-      kicker="Open a card for details. Two of them have live demos you can play with."
+      kicker="Click a project for details. The first two include interactive demos. Click a tag to filter."
     >
-      <FocusFilter focus={focus} setFocus={setFocus} />
       {tech && (
         <p className="tech-filter mono">
           filtering by <strong>{tech}</strong>{' '}
@@ -72,10 +64,11 @@ export default function Projects({ focus, setFocus }: Props) {
             role="button"
             aria-label={`Open ${p.name}`}
           >
-            {p.image && <div className="project__img" style={{ backgroundImage: `url(${p.image})` }} />}
-            {p.demo && <span className="project__badge mono">▶ live demo</span>}
             <div className="project__body">
-              <div className="project__meta mono">{p.dates}</div>
+              <div className="project__meta mono">
+                {p.dates}
+                {p.demo && <span className="project__badge">interactive demo</span>}
+              </div>
               <h3>{p.name}</h3>
               <p>{p.short}</p>
               <StackChips p={p} />
@@ -84,7 +77,7 @@ export default function Projects({ focus, setFocus }: Props) {
         ))}
       </div>
 
-      <h3 className="subhead">More from the workshop</h3>
+      <h3 className="subhead">Other projects</h3>
       <div className="mini-grid">
         {others.map((p) => (
           <article
