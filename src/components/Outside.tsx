@@ -3,7 +3,7 @@ import { places, type Place } from '../data';
 import Atlas from './Atlas';
 
 function Skyline() {
-  const peaks = places.filter((p) => p.kind === 'summit' && p.feet).sort((a, b) => a.feet! - b.feet!);
+  const peaks = places.filter((p) => p.kind === 'hike' && p.feet).sort((a, b) => a.feet! - b.feet!);
   const [active, setActive] = useState<Place>(peaks[peaks.length - 1]);
 
   const top = 14505;

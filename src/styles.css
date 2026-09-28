@@ -390,7 +390,6 @@ details li::marker {
   fill: var(--water-fill);
 }
 .land path {
-  fill: var(--paper);
   stroke: var(--ink-2);
   stroke-width: 0.8;
   stroke-linejoin: round;
@@ -398,9 +397,8 @@ details li::marker {
 }
 .state-lines {
   fill: none;
-  stroke: #a39a86;
-  stroke-width: 0.8;
-  stroke-dasharray: 4 3;
+  stroke: #6f6858;
+  stroke-width: 0.6;
   vector-effect: non-scaling-stroke;
 }
 .route {
@@ -432,11 +430,12 @@ details li::marker {
   stroke: var(--paper);
   stroke-width: 1.2;
 }
-.sym--summit {
+.sym--hike {
   fill: none;
   stroke: var(--red);
   stroke-width: 2.4;
   stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .sym--ruins {
   fill: var(--paper);
@@ -445,6 +444,73 @@ details li::marker {
 }
 .sym--other {
   fill: var(--ink);
+  stroke: var(--paper);
+  stroke-width: 1.2;
+}
+.sym--halo {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sym--park {
+  stroke-width: 1.4;
+}
+
+/* Terrain base map */
+.atlas__frame--terrain .water {
+  fill: #b4cfe3;
+}
+.land--terrain path {
+  stroke: rgba(60, 50, 40, 0.55);
+  stroke-width: 0.8;
+}
+.atlas__frame--terrain .state-lines {
+  stroke: rgba(60, 50, 40, 0.4);
+  stroke-dasharray: 3 3;
+}
+.atlas__map image {
+  pointer-events: none;
+}
+.atlas__layers {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  line-height: 1;
+}
+.atlas__layers button {
+  font: 600 0.85rem var(--cond);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 7px 10px;
+  border: 0;
+  background: none;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.atlas__layers button + button {
+  border-left: 1px solid var(--ink);
+}
+.atlas__layers button[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.atlas__credit {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  max-width: 100%;
+  padding: 3px 7px;
+  background: rgba(243, 239, 228, 0.85);
+  font: 10.5px/1.3 var(--mono);
+  color: var(--ink-2);
+}
+.atlas__credit a {
+  color: inherit;
 }
 .mark.is-hover .sym {
   stroke: var(--red);
@@ -540,13 +606,6 @@ details li::marker {
   columns: 2 300px;
   column-gap: 40px;
 }
-.atlas__list.is-single {
-  columns: auto;
-}
-.atlas__list.is-single ul {
-  columns: 2 260px;
-  column-gap: 40px;
-}
 .atlas__group li {
   break-inside: avoid;
 }
@@ -594,6 +653,40 @@ details li::marker {
 .atlas__group button:hover,
 .atlas__group button.is-hover {
   background: rgba(179, 55, 42, 0.07);
+}
+.atlas__index {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  border-top: 1px solid var(--ink);
+}
+.atlas__index button {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: 1px dotted var(--rule);
+  padding: 10px 12px 10px 0;
+  cursor: pointer;
+  color: var(--ink);
+  font: inherit;
+}
+.atlas__index button:hover {
+  background: rgba(179, 55, 42, 0.07);
+}
+.atlas__index-name {
+  font: 700 1rem var(--cond);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.atlas__index button:hover .atlas__index-name {
+  color: var(--red);
+}
+.atlas__index-counts {
+  font-size: 0.95rem;
+  color: var(--ink-2);
 }
 .atlas__note {
   display: block;
