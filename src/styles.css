@@ -157,6 +157,12 @@ a:hover {
 .nav a:hover {
   color: var(--red);
 }
+.nav .nav__resume {
+  margin-left: auto;
+  margin-right: 0;
+  padding-right: 0;
+  color: var(--red);
+}
 
 .intro {
   display: grid;
@@ -170,6 +176,15 @@ a:hover {
   font-size: 1.3rem;
   line-height: 1.5;
   max-width: 34em;
+}
+.intro__status a {
+  color: inherit;
+  white-space: nowrap;
+}
+.tools {
+  margin: 22px 0 0;
+  max-width: 40em;
+  font-size: 0.95rem;
 }
 .intro .intro__status {
   font: 500 0.95rem var(--cond);

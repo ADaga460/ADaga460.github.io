@@ -1,7 +1,8 @@
-import type { ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { profile, school, work } from './data';
 import Projects from './components/Projects';
-import Outside from './components/Outside';
+// The map and its geography data are most of the bundle; load them only near the section.
+const Outside = lazy(() => import('./components/Outside'));
 
 // Renders [text](href) inside a string as a link. In-page anchors stay in the tab.
 function Inline({ text }: { text: string }) {
@@ -20,6 +21,21 @@ function Inline({ text }: { text: string }) {
         );
       })}
     </>
+  );
+}
+
+function WhenNear({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && setNear(true), { rootMargin: '800px' });
+    io.observe(ref.current!);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div ref={ref} style={near ? undefined : { minHeight: 900 }}>
+      {near && <Suspense fallback={null}>{children}</Suspense>}
+    </div>
   );
 }
 
@@ -59,12 +75,20 @@ export default function App() {
               {label}
             </a>
           ))}
+          <a href={profile.resume} target="_blank" rel="noreferrer" className="nav__resume">
+            Resume
+          </a>
         </nav>
       </header>
 
       <div className="intro">
         <p>{profile.intro}</p>
-        <p className="intro__status">{profile.status}</p>
+        <p className="intro__status">
+          {profile.status}{' '}
+          <a href={profile.resume} target="_blank" rel="noreferrer">
+            Resume (PDF)
+          </a>
+        </p>
       </div>
 
       <main>
@@ -127,6 +151,10 @@ export default function App() {
 
         <Section id="projects" label="Projects">
           <Projects />
+          <p className="tools">
+            <span className="muted">What I use: </span>
+            {school.tools}
+          </p>
         </Section>
 
         <Section id="school" label="School">
@@ -138,15 +166,13 @@ export default function App() {
               <span className="muted">Classes: </span>
               {school.courses.join(', ')}.
             </p>
-            <p>
-              <span className="muted">What I use: </span>
-              {school.tools}
-            </p>
           </div>
         </Section>
 
         <Section id="outside" label="Outside">
-          <Outside />
+          <WhenNear>
+            <Outside />
+          </WhenNear>
         </Section>
 
         <Section id="contact" label="Contact">
@@ -159,6 +185,10 @@ export default function App() {
               and{' '}
               <a href={profile.linkedin} target="_blank" rel="noreferrer">
                 LinkedIn
+              </a>
+              , and my resume is{' '}
+              <a href={profile.resume} target="_blank" rel="noreferrer">
+                here
               </a>
               .
             </p>

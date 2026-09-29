@@ -6,9 +6,10 @@ export const profile = {
   github: 'https://github.com/ADaga460',
   linkedin: 'https://linkedin.com/in/aarav-daga-4325b5237',
   // Put a photo at public/headshot.jpg and set this to '/headshot.jpg'.
-  headshot: null as string | null,
+  headshot: '/headshot.jpg' as string | null,
+  resume: '/resume.pdf',
   intro:
-    "I'm Aarav. I study CS at Penn State and mostly write low-level code: kernels, storage engines, CUDA, firmware. I want to work where software runs into real hardware, whether that's a GPU, a phone chip, a car, or a robot at the bottom of the ocean.",
+    "I'm Aarav, a CS student at Penn State. I've interned twice at Lockheed Martin (multi-GPU CUDA training, then a Go/React ML platform), and on my own I write kernels, storage engines, and firmware. I want to work where software runs into real hardware.",
   status: 'Looking for summer 2027 internships and research.',
   // Links use [text](href). Keep them to anchors on this page or full URLs.
   about: [
@@ -120,7 +121,7 @@ export const projects: Project[] = [
   {
     id: 'kernel',
     name: 'x86_64 microkernel',
-    dates: '2025',
+    dates: '2025–26',
     stack: 'C, x86 assembly, NASM, QEMU',
     text: 'About 1,200 lines of C and assembly that boot on real hardware. It gets into long mode, identity-maps memory with 4-level paging, has handlers for all 32 CPU exceptions, and has syscall gates into ring 3.',
     repo: 'https://github.com/ADaga460/microkernel',

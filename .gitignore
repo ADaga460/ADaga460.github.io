@@ -3,3 +3,6 @@ dist
 *.local
 .DS_Store
 *.tsbuildinfo
+
+# Original resume (has GPA and phone); the site serves public/resume.pdf
+Aarav_Daga_Resume.pdf
