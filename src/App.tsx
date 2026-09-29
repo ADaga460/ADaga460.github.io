@@ -3,6 +3,26 @@ import { profile, school, work } from './data';
 import Projects from './components/Projects';
 import Outside from './components/Outside';
 
+// Renders [text](href) inside a string as a link. In-page anchors stay in the tab.
+function Inline({ text }: { text: string }) {
+  const parts = text.split(/\[([^\]]+)\]\(([^)]+)\)/);
+  return (
+    <>
+      {parts.map((part, i) => {
+        if (i % 3 === 0) return part;
+        if (i % 3 === 2) return null;
+        const href = parts[i + 1];
+        const external = !href.startsWith('#');
+        return (
+          <a key={i} href={href} {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>
+            {part}
+          </a>
+        );
+      })}
+    </>
+  );
+}
+
 function Section({ id, label, children }: { id: string; label: string; children: ReactNode }) {
   return (
     <section id={id} className="section">
@@ -16,8 +36,8 @@ const nav = [
   ['about', 'About'],
   ['work', 'Work'],
   ['projects', 'Projects'],
-  ['outside', 'Outside'],
   ['school', 'School'],
+  ['outside', 'Outside'],
   ['contact', 'Contact'],
 ];
 
@@ -53,9 +73,26 @@ export default function App() {
             {profile.headshot && <img src={profile.headshot} alt={profile.name} className="about__photo" />}
             <div className="prose">
               {profile.about.map((p, i) => (
-                <p key={i}>{p}</p>
+                <p key={i}>
+                  <Inline text={p} />
+                </p>
               ))}
             </div>
+          </div>
+          <div className="focus">
+            {profile.focus.map((f) => (
+              <div key={f.title} className="focus__item">
+                <h3>{f.title}</h3>
+                <p>{f.text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="prose">
+            {profile.aboutMore.map((p, i) => (
+              <p key={i}>
+                <Inline text={p} />
+              </p>
+            ))}
           </div>
         </Section>
 
@@ -92,10 +129,6 @@ export default function App() {
           <Projects />
         </Section>
 
-        <Section id="outside" label="Outside">
-          <Outside />
-        </Section>
-
         <Section id="school" label="School">
           <div className="prose">
             <p>
@@ -110,6 +143,10 @@ export default function App() {
               {school.tools}
             </p>
           </div>
+        </Section>
+
+        <Section id="outside" label="Outside">
+          <Outside />
         </Section>
 
         <Section id="contact" label="Contact">

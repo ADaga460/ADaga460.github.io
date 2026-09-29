@@ -8,13 +8,30 @@ export const profile = {
   // Put a photo at public/headshot.jpg and set this to '/headshot.jpg'.
   headshot: null as string | null,
   intro:
-    "I'm Aarav. I study CS at Penn State and mostly write low-level code: kernels, storage engines, CUDA, firmware. Eventually I want to be writing it for ocean and space science.",
+    "I'm Aarav. I study CS at Penn State and mostly write low-level code: kernels, storage engines, CUDA, firmware. I want to work where software runs into real hardware, whether that's a GPU, a phone chip, a car, or a robot at the bottom of the ocean.",
   status: 'Looking for summer 2027 internships and research.',
+  // Links use [text](href). Keep them to anchors on this page or full URLs.
   about: [
-    "I like systems and computer vision because that's where software has to deal with real hardware. Sensors are noisy and memory runs out, and I'd rather work on those problems than wire together a billion APIs that keep me away from the physical world.",
-    "I'm also an environmentalist. I've been to most of the major biomes in North America, a lot of them in California, and that's where the ocean and space interest comes from. MBARI and NASA build the instruments and robots people use to study places that are hard to get to, and that's the software I want to be writing.",
+    "What I like about systems work is that the hardware sets the rules. Sensors are noisy, memory runs out, and every microsecond has to come from somewhere. I'd rather work on that than wire together a billion APIs that keep me away from the physical world.",
+  ],
+  focus: [
+    {
+      title: 'Systems programming',
+      text: "I like knowing what the machine is actually doing. I wrote a kernel that boots on real hardware and a key-value store with its own wire protocol. At Lockheed most of what I shipped came down to finding where the time went: batching GPU requests, splitting cold loads from background refreshes, and cutting API latency 60%.",
+    },
+    {
+      title: 'Computer vision',
+      text: "My vision work so far has been on the GPU side: getting a sonar Gaussian-splatting pipeline to train across multiple GPUs, down to NCCL deadlocks and custom CUDA rasterizers. I'm most interested in perception that has to run somewhere constrained, like a car, a phone, or an underwater vehicle, where you can't throw a bigger cluster at the problem.",
+    },
+    {
+      title: 'Computer architecture',
+      text: "I'm minoring in computer engineering, with digital design done and computer organization this semester. The part I care about is where hardware and software meet: caches, memory bandwidth, and how a kernel actually maps onto the chip. Profiling the splatting framework and finding that per-pixel rasterization was the bottleneck is the kind of problem I want more of.",
+    },
+  ],
+  aboutMore: [
+    "I'm also an environmentalist. I've been to most of the major biomes in North America, a lot of them in California ([the map is further down](#outside)). That's a big part of why this work appeals to me. The things that make a phone or a data center better, like more compute per watt and perception that runs at the edge, are the same things that let a robot survey a reef or a satellite track a glacier. MBARI and NASA are the obvious places for that, but a lot of it gets built into the chips and software at bigger companies first, and I'd be glad to work on it there.",
     "Away from a computer I'm usually drawing or playing guitar. I draw mostly in charcoal, both compressed and vine, and do line art with art pens. On guitar it's doom and stoner metal, plus classic rock like Led Zeppelin and Pink Floyd.",
-    "Grad school is the plan, since it's the most direct way into that kind of research. I'd also take a full-time job in the same area and do a master's online, or skip it.",
+    "Longer term I want to go to grad school, either full time or online alongside a job.",
   ],
 };
 
