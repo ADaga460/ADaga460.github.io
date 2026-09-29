@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { geoMercator, geoPath } from 'd3-geo';
+import { geoDistance, geoMercator, geoPath } from 'd3-geo';
 import { select } from 'd3-selection';
 import 'd3-transition';
 import { zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from 'd3-zoom';
@@ -11,6 +11,7 @@ import neighborsJson from '../geo/neighbors.json';
 import Tiles from './Tiles';
 import {
   jmt,
+  profile,
   parkNotes,
   parks,
   places,
@@ -73,7 +74,7 @@ const COUNTRY_FILL: Record<string, string> = {
 const beenStates = new Set(visitedStates);
 const beenCountries = new Set(visitedCountries);
 
-type Kind = 'np' | Place['kind'];
+type Kind = 'np' | 'home' | Place['kind'];
 type Mark = { name: string; kind: Kind; region: Region; lat: number; lon: number; seen: boolean; note?: string };
 
 const visited = new Set(visitedParks);
@@ -88,8 +89,18 @@ const marks: Mark[] = [
     note: parkNotes[p.name],
   })),
   ...places.map((p) => ({ ...p, seen: true })),
+  { name: 'Home', kind: 'home', region: 'California', lat: profile.home.lat, lon: profile.home.lon, seen: true },
 ];
 const seenMarks = marks.filter((m) => m.seen);
+
+// The Home tab: everything within this distance of home.
+const NEAR_KM = 100;
+const homeMark = marks[marks.length - 1];
+const nearHome = seenMarks.filter(
+  (m) => m !== homeMark && geoDistance([m.lon, m.lat], [homeMark.lon, homeMark.lat]) * 6371 < NEAR_KM,
+);
+
+type Tab = Region | 'All' | 'Home';
 
 // Panning stops at North America: Aleutians to Newfoundland, Arctic coast to Panama.
 const NA = [proj([-180, 76])!, proj([-48, 5])!] as [[number, number], [number, number]];
@@ -104,7 +115,7 @@ const REGIONS: Region[] = [
   'East',
   'Canada',
   'Mexico',
-  'Costa Rica',
+  'Central America',
 ];
 const KIND_ORDER: Kind[] = ['np', 'park', 'hike', 'ruins', 'other'];
 // [heading, count noun singular, count noun plural]
@@ -114,8 +125,9 @@ const KIND_NAME: Record<Kind, [string, string, string]> = {
   hike: ['Hikes', 'hike', 'hikes'],
   ruins: ['Ruins', 'ruin site', 'ruin sites'],
   other: ['Other', 'other', 'other'],
+  home: ['Home', 'home', 'home'],
 };
-const PRIORITY: Record<Kind, number> = { np: 4, hike: 3, ruins: 3, park: 2, other: 1 };
+const PRIORITY: Record<Kind, number> = { home: 5, np: 4, hike: 3, ruins: 3, park: 2, other: 1 };
 
 function Sym({ kind, seen = true, size = 7 }: { kind: Kind; seen?: boolean; size?: number }) {
   const s = size;
@@ -138,6 +150,13 @@ function Sym({ kind, seen = true, size = 7 }: { kind: Kind; seen?: boolean; size
         </>
       );
     }
+    case 'home':
+      return (
+        <path
+          className="sym sym--home"
+          d={`M0,${-s} L${s},${-s * 0.1} L${s * 0.7},${-s * 0.1} L${s * 0.7},${s * 0.8} L${-s * 0.7},${s * 0.8} L${-s * 0.7},${-s * 0.1} L${-s},${-s * 0.1} Z`}
+        />
+      );
     case 'ruins':
       return <rect className="sym sym--ruins" x={-s * 0.55} y={-s * 0.55} width={s * 1.1} height={s * 1.1} />;
     default:
@@ -177,7 +196,7 @@ export default function Atlas() {
   const engaged = useRef(false);
   const [size, setSize] = useState({ w: 900, h: 560 });
   const [t, setT] = useState<ZoomTransform>(zoomIdentity);
-  const [region, setRegion] = useState<Region | 'All'>('All');
+  const [region, setRegion] = useState<Tab>('All');
   const [hover, setHover] = useState<string | null>(null);
   const [nudge, setNudge] = useState(false);
   const [base, setBase] = useState<'terrain' | 'plain'>('terrain');
@@ -237,9 +256,10 @@ export default function Atlas() {
 
   const flyTo = (pts: Mark[], zoomCap: number) => go(fit(pts.map(world), w, h, Math.min(maxK, k0 * zoomCap)));
 
-  const pick = (r: Region | 'All') => {
+  const pick = (r: Tab) => {
     setRegion(r);
     if (r === 'All') go(home);
+    else if (r === 'Home') flyTo([homeMark, ...nearHome], 60);
     else flyTo(seenMarks.filter((m) => m.region === r), 30);
   };
 
@@ -314,12 +334,13 @@ export default function Atlas() {
   }, [t, w, h, hover, k0]);
 
   const symSize = Math.min(9.5, 6 + Math.log2(t.k / k0 + 1));
-  const here = region === 'All' ? [] : seenMarks.filter((m) => m.region === region);
+  const here =
+    region === 'All' ? [] : region === 'Home' ? nearHome : seenMarks.filter((m) => m.region === region);
 
   return (
     <div className="atlas">
       <div className="tabs" role="tablist" aria-label="Jump to a region">
-        {(['All', ...REGIONS.filter((r) => r !== 'East')] as const).map((r) => (
+        {(['All', 'Home', ...REGIONS.filter((r) => r !== 'East')] as Tab[]).map((r) => (
           <button key={r} role="tab" aria-selected={region === r} onClick={() => pick(r)}>
             {r}
           </button>
@@ -422,6 +443,9 @@ export default function Atlas() {
           <Icon kind="other" /> other
         </span>
         <span>
+          <Icon kind="home" /> home
+        </span>
+        <span>
           <span className="route-key" /> John Muir Trail
         </span>
       </div>
@@ -445,6 +469,11 @@ export default function Atlas() {
         </div>
       ) : (
         <div className="atlas__list">
+          {region === 'Home' && (
+            <p className="atlas__homenote">
+              Home is {profile.home.name}. These are all within {NEAR_KM} km of it.
+            </p>
+          )}
           {byKind(here).map(([k, list]) => (
             <section key={k} className="atlas__group">
               <h4>

@@ -118,7 +118,7 @@ export default function Outside() {
   return (
     <>
       <p className="lede">
-        Places I've been, mostly parks and mountains, across the US, Canada, Mexico, and Costa Rica. Pick a
+        Places I've been, mostly parks and mountains, across the US, Canada, Mexico, and Central America. Pick a
         region to zoom in.
       </p>
       <Atlas />

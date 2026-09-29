@@ -211,6 +211,29 @@ a:hover {
   text-transform: uppercase;
   margin: 3px 0 0;
 }
+.margin-photo {
+  margin: 18px 0 0;
+}
+.margin-photo img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--ink);
+}
+.margin-photo figcaption {
+  margin-top: 5px;
+  font-size: 0.72rem;
+  color: var(--ink-2);
+}
+.sym--home {
+  fill: var(--red);
+  stroke: var(--paper);
+  stroke-width: 1.3;
+}
+.atlas__homenote {
+  column-span: all;
+  margin: 0 0 14px;
+  color: var(--ink-2);
+}
 .section__body {
   min-width: 0;
 }
@@ -230,17 +253,6 @@ a:hover {
   margin: 40px 0 8px;
 }
 
-.about--photo {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 28px;
-  align-items: start;
-}
-.about__photo {
-  width: 100%;
-  border: 1px solid var(--ink);
-  filter: sepia(0.15);
-}
 
 .focus {
   display: grid;
@@ -1096,22 +1108,26 @@ details li::marker {
     grid-template-columns: 1fr;
     gap: 12px;
   }
+  .section__side {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .margin-photo {
+    width: 96px;
+    margin: 0;
+  }
+  .focus {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
   .entry {
     grid-template-columns: 1fr;
     gap: 2px;
   }
   .entry__when {
     padding-top: 0;
-  }
-  .about--photo {
-    grid-template-columns: 1fr;
-  }
-  .focus {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  .about__photo {
-    max-width: 200px;
   }
   .legend {
     flex-direction: column;

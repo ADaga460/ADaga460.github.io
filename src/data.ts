@@ -8,8 +8,9 @@ export const profile = {
   // Put a photo at public/headshot.jpg and set this to '/headshot.jpg'.
   headshot: '/headshot.jpg' as string | null,
   resume: '/resume.pdf',
+  home: { name: 'Cupertino, CA', lat: 37.323, lon: -122.0322 },
   intro:
-    "I'm Aarav, a CS student at Penn State. I've interned twice at Lockheed Martin (multi-GPU CUDA training, then a Go/React ML platform), and on my own I write kernels, storage engines, and firmware. I want to work where software runs into real hardware.",
+    "I'm Aarav, a CS student at Penn State from Cupertino, California. I've interned twice at Lockheed Martin (multi-GPU CUDA training, then a Go/React ML platform), and on my own I write kernels, storage engines, and firmware. I want to work where software runs into real hardware.",
   status: 'Looking for summer 2027 internships and research.',
   // Links use [text](href). Keep them to anchors on this page or full URLs.
   about: [
@@ -326,7 +327,7 @@ export type Region =
   | 'East'
   | 'Canada'
   | 'Mexico'
-  | 'Costa Rica';
+  | 'Central America';
 
 export const regionOfState = (st: string): Region =>
   st === 'CA'
@@ -408,12 +409,23 @@ export const places: Place[] = [
   { name: 'Hierve el Agua', kind: 'other', region: 'Mexico', lat: 16.866, lon: -96.276 },
   { name: 'Yucatán', kind: 'other', region: 'Mexico', lat: 20.97, lon: -89.62 },
   { name: 'Jalisco', kind: 'other', region: 'Mexico', lat: 20.66, lon: -103.35 },
+  { name: 'Tenochtitlan (Templo Mayor)', kind: 'ruins', region: 'Mexico', lat: 19.4346, lon: -99.1313 },
+  { name: 'Uxmal', kind: 'ruins', region: 'Mexico', lat: 20.3594, lon: -89.7714 },
+  { name: 'Mayapán', kind: 'ruins', region: 'Mexico', lat: 20.6297, lon: -89.4606 },
+  { name: 'Xochicalco', kind: 'ruins', region: 'Mexico', lat: 18.8036, lon: -99.2956 },
 
-  // Costa Rica
-  { name: 'Manuel Antonio National Park', kind: 'park', region: 'Costa Rica', lat: 9.39, lon: -84.14 },
-  { name: 'Tapantí–Macizo de la Muerte National Park', kind: 'park', region: 'Costa Rica', lat: 9.72, lon: -83.78 },
-  { name: 'Barbilla National Park', kind: 'park', region: 'Costa Rica', lat: 9.97, lon: -83.45 },
-  { name: 'Irazú Volcano National Park', kind: 'park', region: 'Costa Rica', lat: 9.979, lon: -83.852 },
+  // Central America
+  { name: 'Tikal', kind: 'ruins', region: 'Central America', lat: 17.222, lon: -89.6237, note: 'Guatemala' },
+  { name: 'El Mirador', kind: 'ruins', region: 'Central America', lat: 17.7547, lon: -89.9203, note: 'Guatemala' },
+  { name: 'Piedras Negras', kind: 'ruins', region: 'Central America', lat: 17.1767, lon: -91.2628, note: 'Guatemala' },
+  { name: 'Caracol', kind: 'ruins', region: 'Central America', lat: 16.7633, lon: -89.1172, note: 'Belize' },
+  { name: 'Chiquibul National Park', kind: 'park', region: 'Central America', lat: 16.62, lon: -88.95, note: 'Belize' },
+  { name: 'Copán', kind: 'ruins', region: 'Central America', lat: 14.8378, lon: -89.1419, note: 'Honduras' },
+
+  { name: 'Manuel Antonio National Park', kind: 'park', region: 'Central America', note: 'Costa Rica', lat: 9.39, lon: -84.14 },
+  { name: 'Tapantí–Macizo de la Muerte National Park', kind: 'park', region: 'Central America', note: 'Costa Rica', lat: 9.72, lon: -83.78 },
+  { name: 'Barbilla National Park', kind: 'park', region: 'Central America', note: 'Costa Rica', lat: 9.97, lon: -83.45 },
+  { name: 'Irazú Volcano National Park', kind: 'park', region: 'Central America', note: 'Costa Rica', lat: 9.979, lon: -83.852 },
 ];
 
 // John Muir Trail, Happy Isles to Whitney, through the main passes. [lon, lat]
@@ -427,4 +439,4 @@ export const visitedStates = [
   'California', 'Nevada', 'Utah', 'Arizona', 'New Mexico', 'Colorado', 'Wyoming', 'Montana',
   'Washington', 'Hawaii', 'Alaska', 'Pennsylvania', 'New Jersey',
 ];
-export const visitedCountries = ['Canada', 'Mexico', 'Costa Rica'];
+export const visitedCountries = ['Canada', 'Mexico', 'Guatemala', 'Belize', 'Honduras', 'Costa Rica'];

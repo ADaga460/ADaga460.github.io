@@ -39,10 +39,13 @@ function WhenNear({ children }: { children: ReactNode }) {
   );
 }
 
-function Section({ id, label, children }: { id: string; label: string; children: ReactNode }) {
+function Section({ id, label, aside, children }: { id: string; label: string; aside?: ReactNode; children: ReactNode }) {
   return (
     <section id={id} className="section">
-      <h2 className="section__label">{label}</h2>
+      <div className="section__side">
+        <h2 className="section__label">{label}</h2>
+        {aside}
+      </div>
       <div className="section__body">{children}</div>
     </section>
   );
@@ -92,16 +95,24 @@ export default function App() {
       </div>
 
       <main>
-        <Section id="about" label="About">
-          <div className={profile.headshot ? 'about about--photo' : 'about'}>
-            {profile.headshot && <img src={profile.headshot} alt={profile.name} className="about__photo" />}
-            <div className="prose">
-              {profile.about.map((p, i) => (
-                <p key={i}>
-                  <Inline text={p} />
-                </p>
-              ))}
-            </div>
+        <Section
+          id="about"
+          label="About"
+          aside={
+            profile.headshot && (
+              <figure className="margin-photo">
+                <img src={profile.headshot} alt={profile.name} />
+                <figcaption className="mono">{profile.home.name}</figcaption>
+              </figure>
+            )
+          }
+        >
+          <div className="prose">
+            {profile.about.map((p, i) => (
+              <p key={i}>
+                <Inline text={p} />
+              </p>
+            ))}
           </div>
           <div className="focus">
             {profile.focus.map((f) => (
