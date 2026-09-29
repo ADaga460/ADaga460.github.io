@@ -10,24 +10,24 @@ export const profile = {
   resume: '/resume.pdf',
   home: { name: 'Cupertino, CA', lat: 37.323, lon: -122.0322 },
   intro:
-    "I'm Aarav, a CS student at Penn State from Cupertino, California. I've interned twice at Lockheed Martin (multi-GPU CUDA training, then a Go/React ML platform), and on my own I write kernels, storage engines, and firmware. I want to work where software runs into real hardware.",
+    "I'm Aarav, a CS student at Penn State from Cupertino, California. I've interned twice at Lockheed Martin, first on multi-GPU CUDA training and then on a Go/React ML platform, and outside of work I write kernels, storage engines, and firmware.",
   status: 'Looking for summer 2027 internships and research.',
   // Links use [text](href). Keep them to anchors on this page or full URLs.
   about: [
-    "What I like about systems work is that the hardware sets the rules. Sensors are noisy, memory runs out, and every microsecond has to come from somewhere. I'd rather work on that than wire together a billion APIs that keep me away from the physical world.",
+    "The work I've liked most has had the hardware in the middle of it: fitting audio into a 200 ms budget on an ESP32, tracking down NCCL deadlocks across two GPUs, getting a kernel to set up its own page tables before anything else can run. I'd rather work on that than wire together a billion APIs that keep me away from the physical world.",
   ],
   focus: [
     {
       title: 'Systems programming',
-      text: "I like knowing what the machine is actually doing. I wrote a kernel that boots on real hardware and a key-value store with its own wire protocol. At Lockheed most of what I shipped came down to finding where the time went: batching GPU requests, splitting cold loads from background refreshes, and cutting API latency 60%.",
+      text: "A C++20 key-value store with an async ASIO server, a length-prefixed binary protocol, and a deadlock-free transfer layer covered by 46 tests. At Lockheed I shipped 9 merged MRs to a Go/React platform with 7,500 users, cut API latency 60% across four pipelines, and stopped latency spikes at high pod counts by capping per-pod GPU requests at 5 concurrent.",
     },
     {
       title: 'Computer vision',
-      text: "My vision work so far has been on the GPU side: getting a sonar Gaussian-splatting pipeline to train across multiple GPUs, down to NCCL deadlocks and custom CUDA rasterizers. I'm most interested in perception that has to run somewhere constrained, like a car, a phone, or an underwater vehicle, where you can't throw a bigger cluster at the problem.",
+      text: "Through Nittany AI I worked on a sonar Gaussian-splatting framework that turns multi-view video into synthetic underwater imagery. I fixed 11 bugs to get it training across two GPUs, including parameter sharding, a missing gradient all_reduce, and NCCL process-group deadlocks, and debugged tensor shape errors in its custom CUDA rasterization kernels. It reached 35.7 dB PSNR and 0.98 SSIM.",
     },
     {
       title: 'Computer architecture',
-      text: "I'm minoring in computer engineering, with digital design done and computer organization this semester. The part I care about is where hardware and software meet: caches, memory bandwidth, and how a kernel actually maps onto the chip. Profiling the splatting framework and finding that per-pixel rasterization was the bottleneck is the kind of problem I want more of.",
+      text: "My x86_64 microkernel boots on real hardware into long mode with 4-level paging, 32 exception handlers, and ring-3 syscall gates, in about 1,200 lines of C and assembly. On the splatting project I benchmarked one GPU against two and traced the bottleneck to per-pixel rasterization. I'm minoring in computer engineering, with digital design done and computer organization this semester.",
     },
   ],
   aboutMore: [
