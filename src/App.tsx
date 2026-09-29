@@ -86,12 +86,12 @@ export default function App() {
 
       <div className="intro">
         <p>{profile.intro}</p>
-        <p className="intro__status">
-          {profile.status}{' '}
-          <a href={profile.resume} target="_blank" rel="noreferrer">
+        <div className="intro__status">
+          <p>{profile.status}</p>
+          <a className="resume-btn" href={profile.resume} target="_blank" rel="noreferrer">
             Resume (PDF)
           </a>
-        </p>
+        </div>
       </div>
 
       <main>
