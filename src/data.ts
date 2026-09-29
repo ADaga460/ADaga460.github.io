@@ -13,6 +13,7 @@ export const profile = {
   about: [
     "I like systems and computer vision because that's where software has to deal with real hardware. Sensors are noisy and memory runs out, and I'd rather work on those problems than wire together a billion APIs that keep me away from the physical world.",
     "I'm also an environmentalist. I've been to most of the major biomes in North America, a lot of them in California, and that's where the ocean and space interest comes from. MBARI and NASA build the instruments and robots people use to study places that are hard to get to, and that's the software I want to be writing.",
+    "Away from a computer I'm usually drawing or playing guitar. I draw mostly in charcoal, both compressed and vine, and do line art with art pens. On guitar it's doom and stoner metal, plus classic rock like Led Zeppelin and Pink Floyd.",
     "Grad school is the plan, since it's the most direct way into that kind of research. I'd also take a full-time job in the same area and do a master's online, or skip it.",
   ],
 };
@@ -140,6 +141,51 @@ export const projects: Project[] = [
     stack: 'Python, FastAPI, Docker',
     text: "Texts a few people international news that doesn't get much coverage. An LLM picks and summarizes the stories, and you can text back to ask about them.",
     repo: 'https://github.com/ADaga460/newstexter',
+  },
+];
+
+// Older or smaller things. Listed plainly under the main projects.
+export type SmallProject = { name: string; text: string; stack: string; repo: string; live?: string };
+
+export const smallProjects: SmallProject[] = [
+  {
+    name: 'Paleozooa',
+    text: 'A daily guessing game for Paleozoic animals. Wrong guesses reveal the branches you share with the answer on a growing family tree.',
+    stack: 'Next.js, TypeScript, d3-hierarchy',
+    repo: 'https://github.com/ADaga460/paleozooa',
+    live: 'https://paleozooa.vercel.app',
+  },
+  {
+    name: 'StudySphere',
+    text: 'HackPSU project. Give it a topic and it builds a mind map, then writes a lesson and a quiz for each node.',
+    stack: 'React, FastAPI, LLMs',
+    repo: 'https://github.com/ADaga460/hackpsu',
+    live: 'https://hackpsu-five.vercel.app',
+  },
+  {
+    name: 'AI Study Assistant',
+    text: 'Chrome extension that teaches whatever page you are on, with quizzes along the way and a final exam.',
+    stack: 'JavaScript, Python',
+    repo: 'https://github.com/ADaga460/ai-tutor',
+  },
+  {
+    name: 'News analyzer',
+    text: 'Pulls the article text out of a news URL and has an LLM analyze it. FastAPI backend, Expo frontend.',
+    stack: 'Python, FastAPI, TypeScript',
+    repo: 'https://github.com/ADaga460/news-analyzer-backend',
+    live: 'https://news-analyzer-frontend-plat.vercel.app',
+  },
+  {
+    name: 'Boot sector',
+    text: 'A 512-byte boot sector in x86 assembly. This is where the microkernel started.',
+    stack: 'x86 assembly',
+    repo: 'https://github.com/ADaga460/os-test',
+  },
+  {
+    name: 'Wallet API',
+    text: 'Transactions backend for an expense tracker, with Postgres and rate limiting.',
+    stack: 'Node, Express',
+    repo: 'https://github.com/ADaga460/wallet-app',
   },
 ];
 

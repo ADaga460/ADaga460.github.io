@@ -90,6 +90,9 @@ const marks: Mark[] = [
   ...places.map((p) => ({ ...p, seen: true })),
 ];
 const seenMarks = marks.filter((m) => m.seen);
+
+// Panning stops at North America: Aleutians to Newfoundland, Arctic coast to Panama.
+const NA = [proj([-180, 76])!, proj([-48, 5])!] as [[number, number], [number, number]];
 const world = (m: { lon: number; lat: number }) => proj([m.lon, m.lat]) as [number, number];
 
 const REGIONS: Region[] = [
@@ -196,11 +199,13 @@ export default function Atlas() {
   const home = useMemo(() => fit(seenMarks.map(world), w, h, Infinity), [w, h]);
   const k0 = home.k;
   const maxK = (2 ** MAX_VIEW_Z * 256) / WORLD;
+  // Don't zoom out past the point where the frame would show more than North America.
+  const minK = Math.min(k0, Math.max(k0 * 0.8, w / (NA[1][0] - NA[0][0]), h / (NA[1][1] - NA[0][1])));
 
   useEffect(() => {
     const z = zoom<SVGSVGElement, unknown>()
-      .scaleExtent([k0 * 0.8, maxK])
-      .translateExtent([[0, WORLD * 0.12], [WORLD, WORLD * 0.62]])
+      .scaleExtent([minK, maxK])
+      .translateExtent(NA)
       .filter((e: Event) => {
         if (e.type === 'wheel') {
           const ok = engaged.current || (e as WheelEvent).ctrlKey || (e as WheelEvent).metaKey;
@@ -219,7 +224,7 @@ export default function Atlas() {
     return () => {
       sel.on('.zoom', null);
     };
-  }, [w, h, home, k0, maxK]);
+  }, [w, h, home, k0, minK, maxK]);
 
   useEffect(() => {
     if (!nudge) return;

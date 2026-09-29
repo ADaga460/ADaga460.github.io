@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { profile, school, work } from './data';
-import Topo from './components/Topo';
 import Projects from './components/Projects';
 import Outside from './components/Outside';
 
@@ -47,8 +46,6 @@ export default function App() {
         <p>{profile.intro}</p>
         <p className="intro__status">{profile.status}</p>
       </div>
-
-      <Topo />
 
       <main>
         <Section id="about" label="About">
@@ -133,22 +130,8 @@ export default function App() {
       </main>
 
       <footer className="legend">
-        <div className="scale" aria-hidden="true">
-          <div className="scale__bar">
-            <span />
-            <span />
-            <span />
-            <span />
-          </div>
-          <div className="scale__labels mono">
-            <span>0</span>
-            <span>½</span>
-            <span>1 mile</span>
-          </div>
-        </div>
         <p>
-          Contour interval about 100 feet. The terrain up top is generated, not real. Set in Source Serif
-          and Barlow Condensed. © {new Date().getFullYear()} Aarav Daga.
+          Set in Source Serif and Barlow Condensed. © {new Date().getFullYear()} Aarav Daga.
         </p>
       </footer>
     </div>
