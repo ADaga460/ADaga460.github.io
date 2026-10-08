@@ -842,6 +842,21 @@ details li::marker {
   margin: 0;
 }
 
+.shot {
+  margin: 10px 0 12px;
+  max-width: 480px;
+}
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--ink);
+}
+.shot figcaption {
+  margin-top: 5px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
 .small-projects {
   list-style: none;
   margin: 0;

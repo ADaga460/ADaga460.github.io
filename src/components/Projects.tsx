@@ -1,7 +1,18 @@
 import { useState } from 'react';
-import { projects, smallProjects } from '../data';
+import { projects, smallProjects, type Shot } from '../data';
 import ProtocolDemo from './demos/ProtocolDemo';
 import PagingDemo from './demos/PagingDemo';
+
+function ShotFigure({ shot }: { shot: Shot }) {
+  return (
+    <figure className="shot">
+      <a href={shot.src} target="_blank" rel="noreferrer">
+        <img src={shot.src} alt={shot.alt} loading="lazy" />
+      </a>
+      <figcaption>{shot.caption}</figcaption>
+    </figure>
+  );
+}
 
 export default function Projects() {
   const [open, setOpen] = useState<string | null>(null);
@@ -23,6 +34,7 @@ export default function Projects() {
                 )}
               </h3>
               <p>{p.text}</p>
+              {p.shot && <ShotFigure shot={p.shot} />}
               <div className="entry__meta">
                 <span className="mono">{p.stack}</span>
                 {p.demo && (
@@ -58,6 +70,7 @@ export default function Projects() {
             )}
             <span className="small-projects__text"> {p.text}</span>
             <span className="small-projects__stack mono"> {p.stack}</span>
+            {p.shot && <ShotFigure shot={p.shot} />}
           </li>
         ))}
       </ul>

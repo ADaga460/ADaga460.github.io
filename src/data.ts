@@ -97,6 +97,9 @@ export const work: Job[] = [
 
 export type DemoId = 'protocol' | 'paging';
 
+// A real screenshot of the project running. Files live in public/shots.
+export type Shot = { src: string; alt: string; caption: string };
+
 export type Project = {
   id: string;
   name: string;
@@ -106,6 +109,7 @@ export type Project = {
   repo?: string;
   demo?: DemoId;
   demoLabel?: string;
+  shot?: Shot;
 };
 
 export const projects: Project[] = [
@@ -118,6 +122,11 @@ export const projects: Project[] = [
     repo: 'https://github.com/ADaga460/dist-kv-store',
     demo: 'protocol',
     demoLabel: 'Encode a request',
+    shot: {
+      src: '/shots/kv.png',
+      alt: 'Terminal session with the key-value store client and test run',
+      caption: 'A transfer between two accounts, an overdraft getting rejected, and the test suite.',
+    },
   },
   {
     id: 'kernel',
@@ -128,6 +137,11 @@ export const projects: Project[] = [
     repo: 'https://github.com/ADaga460/microkernel',
     demo: 'paging',
     demoLabel: 'Walk the page tables',
+    shot: {
+      src: '/shots/kernel.png',
+      alt: 'The kernel booting in QEMU',
+      caption: 'Booting in QEMU: memory manager and heap come up, the timer ticks, and it jumps to ring 3.',
+    },
   },
   {
     id: 'gitcontext',
@@ -143,6 +157,11 @@ export const projects: Project[] = [
     dates: '2025',
     stack: 'C++, OpenGL',
     text: 'A black hole simulator. I wrote it to learn C++ properly.',
+    shot: {
+      src: '/shots/blackhole.png',
+      alt: 'Light rays bending around a black hole',
+      caption: 'Light rays bending around the event horizon. The closest ones fall in.',
+    },
     repo: 'https://github.com/ADaga460/blackhole-sim',
   },
   {
@@ -164,12 +183,17 @@ export const projects: Project[] = [
 ];
 
 // Older or smaller things. Listed plainly under the main projects.
-export type SmallProject = { name: string; text: string; stack: string; repo: string; live?: string };
+export type SmallProject = { name: string; text: string; stack: string; repo: string; live?: string; shot?: Shot };
 
 export const smallProjects: SmallProject[] = [
   {
     name: 'Paleozooa',
-    text: 'A daily guessing game for Paleozoic animals. Wrong guesses reveal the branches you share with the answer on a growing family tree.',
+    text: 'A daily guessing game for Mesozoic animals. Wrong guesses reveal the branches you share with the answer on a growing family tree.',
+    shot: {
+      src: '/shots/paleozooa.jpg',
+      alt: 'Paleozooa after three guesses, showing the family tree',
+      caption: 'Three guesses in: the tree shows how each one is related to the answer.',
+    },
     stack: 'Next.js, TypeScript, d3-hierarchy',
     repo: 'https://github.com/ADaga460/paleozooa',
     live: 'https://paleozooa.vercel.app',
