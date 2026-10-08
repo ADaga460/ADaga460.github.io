@@ -150,6 +150,11 @@ export const projects: Project[] = [
     stack: 'C, SQLite, JSONL',
     text: "A CLI for attaching notes and TODOs to Git commits. It writes straight into .git/, keeps notes in JSONL and TODOs in SQLite, and runs on commit, merge, and pull hooks. There's also a merge driver so notes don't conflict, and a daemon mode.",
     repo: 'https://github.com/ADaga460/gitnotes',
+    shot: {
+      src: '/shots/gitcontext.png',
+      alt: 'Terminal session using gitnote on a repository',
+      caption: 'Adding a note, attaching it to a commit, and reading it back.',
+    },
   },
   {
     id: 'blackhole',
@@ -166,11 +171,16 @@ export const projects: Project[] = [
   },
   {
     id: 'emulator',
-    name: 'CPU emulator',
+    name: 'CHIP-8 emulator',
     dates: '2025',
-    stack: 'C',
-    text: 'An instruction-level CPU emulator.',
+    stack: 'C, SDL2',
+    text: 'A CHIP-8 emulator: fetch, decode, and execute for the full instruction set, with an SDL2 display. It runs the classic ROMs.',
     repo: 'https://github.com/ADaga460/emulator',
+    shot: {
+      src: '/shots/chip8.png',
+      alt: 'Breakout running in the CHIP-8 emulator',
+      caption: 'Running BRIX, a Breakout clone from the standard CHIP-8 ROM set.',
+    },
   },
   {
     id: 'newstexter',
