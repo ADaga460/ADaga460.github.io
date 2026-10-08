@@ -27,7 +27,7 @@ export const profile = {
     },
     {
       title: 'Computer architecture',
-      text: "My x86_64 microkernel boots on real hardware into long mode with 4-level paging, 32 exception handlers, and ring-3 syscall gates, in about 1,200 lines of C and assembly. On the splatting project I benchmarked one GPU against two and traced the bottleneck to per-pixel rasterization. I'm minoring in computer engineering, with digital design done and computer organization this semester.",
+      text: "My x86_64 kernel boots on real hardware into long mode with 4-level paging, 32 exception handlers, and ring-3 syscall gates, in about 1,200 lines of C and assembly. On the splatting project I benchmarked one GPU against two and traced the bottleneck to per-pixel rasterization. I'm minoring in computer engineering, with digital design done and computer organization this semester.",
     },
   ],
   aboutMore: [
@@ -121,7 +121,7 @@ export const projects: Project[] = [
   },
   {
     id: 'kernel',
-    name: 'x86_64 microkernel',
+    name: 'x86_64 kernel',
     dates: '2025–26',
     stack: 'C, x86 assembly, NASM, QEMU',
     text: 'About 1,200 lines of C and assembly that boot on real hardware. It gets into long mode, identity-maps memory with 4-level paging, has handlers for all 32 CPU exceptions, and has syscall gates into ring 3.',
@@ -196,7 +196,7 @@ export const smallProjects: SmallProject[] = [
   },
   {
     name: 'Boot sector',
-    text: 'A 512-byte boot sector in x86 assembly. This is where the microkernel started.',
+    text: 'A 512-byte boot sector in x86 assembly. This is where the kernel started.',
     stack: 'x86 assembly',
     repo: 'https://github.com/ADaga460/os-test',
   },
